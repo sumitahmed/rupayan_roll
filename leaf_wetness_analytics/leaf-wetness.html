@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaf Wetness Analytics - AgriSense AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="leaf-wetness.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Header Section -->
+        <!-- Header with Logo and User Avatar -->
+        <header class="header">
+            <div class="logo-section">
+                <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
+                <!-- REPLACE WITH THIS -->
+<a href="../Landing_Page/landing.html" class="brand-link">
+    <span class="brand">AgriSense AI</span>
+</a>
+
+            </div>
+
+            <div class="user-section">
+                <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
+            </div>
+        </header>
+
+
+        <!-- Navigation Semi-Circle - Top Right -->
+        <!-- <div class="nav-semicircle" onclick="navigateBack()">
+            <img src="../shared/images/icons/top_right_semicircle.jpeg" alt="Navigation Icon" class="nav-icon">
+            <div class="nav-text">LEAF<br>WETNESS</div>
+        </div> -->
+
+        <!-- Main Title Section -->
+        <div class="main-title">
+            <h1 class="dashboard-title">Leaf Wetness Analytics</h1>
+            <p class="dashboard-subtitle">Monitor leaf surface moisture and prevent fungal diseases for healthier crops
+            </p>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button class="action-btn primary" onclick="generateWetnessReport()">
+                Generate Wetness Report →
+            </button>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+            <div class="metric-card current">
+                <div class="metric-label">Current Wetness</div>
+                <div class="metric-value status-current" id="current-wetness">18%</div>
+            </div>
+            <div class="metric-card average">
+                <div class="metric-label">24h Average</div>
+                <div class="metric-value status-average" id="avg-wetness">22%</div>
+            </div>
+            <div class="metric-card range">
+                <div class="metric-label">Today's Range</div>
+                <div class="metric-value status-range" id="wetness-range">15-28%</div>
+            </div>
+            <div class="metric-card status">
+                <div class="metric-label">Disease Risk</div>
+                <div class="metric-value status-low" id="disease-risk">LOW</div>
+            </div>
+        </div>
+
+        <!-- Analytics Row -->
+        <div class="analytics-row">
+            <div class="chart-container" onclick="viewWetnessChart()">
+                <h3 class="chart-title">24-Hour Wetness Pattern</h3>
+                <div class="chart-placeholder">
+                    <img src="../shared/images/backgrounds/bg-leaf.png" alt="Wetness Pattern Chart"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                </div>
+            </div>
+            <div class="data-container">
+                <h3 class="data-title">Wetness Readings</h3>
+                <div class="readings-table">
+                    <div class="table-header">
+                        <span>Time</span>
+                        <span>Wetness</span>
+                        <span>Risk Level</span>
+                    </div>
+                    <div class="table-body" id="readings-data">
+                        <div class="table-row">
+                            <span>14:30</span>
+                            <span>18%</span>
+                            <span class="status-low">Low</span>
+                        </div>
+                        <div class="table-row">
+                            <span>14:00</span>
+                            <span>22%</span>
+                            <span class="status-low">Low</span>
+                        </div>
+                        <div class="table-row">
+                            <span>13:30</span>
+                            <span>25%</span>
+                            <span class="status-medium">Medium</span>
+                        </div>
+                        <div class="table-row">
+                            <span>13:00</span>
+                            <span>28%</span>
+                            <span class="status-medium">Medium</span>
+                        </div>
+                        <div class="table-row">
+                            <span>12:30</span>
+                            <span>32%</span>
+                            <span class="status-high">High</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Row -->
+        <div class="insights-row">
+            <div class="insights-container">
+                <h3 class="insights-title">Disease Prevention</h3>
+                <div class="insights-content">
+                    <div class="insight-item">
+                        <span class="insight-icon">🍃</span>
+                        <div class="insight-text">
+                            <h4>Current Status</h4>
+                            <p>Leaf wetness levels are within safe range. Low risk of fungal infections.</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-icon">⚠️</span>
+                        <div class="insight-text">
+                            <h4>Prevention Alert</h4>
+                            <p>Monitor closely during morning dew hours (5-8 AM) for elevated risks.</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-icon">📊</span>
+                        <div class="insight-text">
+                            <h4>Weekly Trend</h4>
+                            <p>Wetness duration decreased by 12% - excellent air circulation improvement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alerts-container">
+                <h3 class="alerts-title">Monitoring Alerts</h3>
+                <div class="alerts-content">
+                    <div class="alert-item success">
+                        <span class="alert-dot"></span>
+                        <span class="alert-text">All leaf wetness sensors active</span>
+                    </div>
+                    <div class="alert-item info">
+                        <span class="alert-dot"></span>
+                        <span class="alert-text">Disease risk assessment updated</span>
+                    </div>
+                    <div class="alert-item warning">
+                        <span class="alert-dot"></span>
+                        <span class="alert-text">High humidity expected tomorrow</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Impact Section -->
+        <div class="weather-impact">
+            <div class="weather-container">
+                <h3 class="weather-title">Weather Impact</h3>
+                <div class="weather-content">
+                    <div class="weather-item">
+                        <div class="weather-metric">
+                            <span class="weather-label">Humidity</span>
+                            <span class="weather-value" id="humidity">65%</span>
+                        </div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-metric">
+                            <span class="weather-label">Dew Point</span>
+                            <span class="weather-value" id="dew-point">12°C</span>
+                        </div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-metric">
+                            <span class="weather-label">Wind Speed</span>
+                            <span class="weather-value" id="wind-speed">8 km/h</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Navigation -->
+        <a href="../Options/options.html" class="back-link">← Back to Options</a>
+    </div>
+
+    <script src="leaf-wetness.js"></script>
+</body>
+
+</html>

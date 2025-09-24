@@ -1,0 +1,543 @@
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-image: url('../shared/images/backgrounds/bg-crop.png');
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Header - EXACTLY like soil-moisture (corrected version) */
+.header {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.logo {
+    width: 50px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.brand {
+    color: #000000;
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.avatar:hover {
+    border-color: rgba(255,255,255,0.6);
+}
+
+/* Main Title - Adjusted for fixed header */
+.main-title {
+    text-align: center;
+    margin-top: 140px;
+    margin-bottom: 30px;
+}
+
+.main-title h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+}
+
+.main-title p {
+    font-size: 18px;
+    color: #1a1a1a;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 15px 30px;
+    border-radius: 30px;
+    display: inline-block;
+    margin: 0 auto;
+    max-width: 700px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+}
+
+/* Upload Button */
+.upload-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.upload-btn {
+    background: #2CFF05;
+    color: #000000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(44,255,5,0.3);
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #30FF14;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(44,255,5,0.4);
+}
+
+/* Metrics Cards */
+.metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    text-align: left;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-card.recommendation {
+    min-height: 120px;
+}
+
+.metric-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #333333;
+}
+
+.metric-value.excellent {
+    color: #2CFF05;
+}
+
+.metric-value.small {
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #2CFF05;
+}
+
+/* Charts Container */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    min-height: 350px;
+}
+
+.chart-card:hover {
+    transform: translateY(-5px);
+}
+
+.chart-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+    padding: 25px 25px 0 25px;
+}
+
+.chart-content {
+    height: 300px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8F9FA;
+}
+
+.chart-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Plots Container */
+.plots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 80px auto;
+    padding: 0 20px;
+}
+
+.plot-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    min-height: 300px;
+}
+
+.plot-card:hover {
+    transform: translateY(-5px);
+}
+
+.plot-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+    padding: 25px 25px 0 25px;
+}
+
+.plot-content {
+    height: 250px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8F9FA;
+}
+
+.plot-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Back Link */
+.back-link {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 12px 18px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.back-link:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateX(-5px);
+}
+
+/* Responsive header styles - EXACTLY from soil-moisture */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .header {
+        padding: 0 30px;
+    }
+    
+    .brand {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .header {
+        height: 70px;
+        padding: 0 25px;
+    }
+    
+    .logo {
+        width: 45px;
+        height: 40px;
+    }
+    
+    .brand {
+        font-size: 16px;
+    }
+    
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .main-title {
+        margin-top: 110px;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        height: 60px;
+        padding: 0 20px;
+    }
+    
+    .logo-section {
+        gap: 10px;
+    }
+    
+    .logo {
+        width: 40px;
+        height: 35px;
+    }
+    
+    .brand {
+        font-size: 14px;
+    }
+    
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .main-title {
+        margin-top: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0 15px;
+    }
+    
+    .logo-section {
+        gap: 8px;
+    }
+    
+    .brand {
+        font-size: 12px;
+        max-width: 150px;
+    }
+}
+
+/* Responsive Design */
+@media (min-width: 1200px) {
+    .metrics-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .charts-container,
+    .plots-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-title h1 {
+        font-size: 40px;
+    }
+    
+    .metrics-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .charts-container,
+    .plots-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title h1 {
+        font-size: 32px;
+    }
+    
+    .main-title p {
+        font-size: 16px;
+    }
+    
+    .upload-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .metrics-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 0 15px;
+    }
+    
+    .charts-container,
+    .plots-container {
+        gap: 15px;
+        padding: 0 15px;
+    }
+    
+    .chart-card,
+    .plot-card {
+        min-height: 280px;
+    }
+    
+    .chart-content,
+    .plot-content {
+        height: 200px;
+    }
+    
+    .back-link {
+        bottom: 20px;
+        left: 20px;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-card,
+    .plot-card {
+        min-height: 220px;
+    }
+    
+    .chart-content,
+    .plot-content {
+        height: 160px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .metric-card,
+    .chart-card,
+    .plot-card,
+    .upload-btn,
+    .back-link,
+    .header {
+        transition: none;
+    }
+}
+/* All your existing CSS code stays the same... */
+
+/* Brand link styling - ADD THIS AT THE END */
+.brand-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.brand-link:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.brand-link:hover .brand {
+    text-shadow: 2px 2px 8px rgba(44, 255, 5, 0.4);
+}
+
+/* Update existing .brand class to this: */
+.brand {
+    color: #000000;
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    transition: all 0.3s ease;
+}
+
+/* Responsive brand link styles - ADD AT THE END */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .brand {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .brand {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .brand {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand {
+        font-size: 12px;
+        max-width: 150px;
+    }
+}

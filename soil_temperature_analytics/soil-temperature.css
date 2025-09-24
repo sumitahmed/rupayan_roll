@@ -1,0 +1,661 @@
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body - Background shifted down with specific positioning */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-image: url('../shared/images/backgrounds/bg-soilTemp.jpeg');
+    background-size: cover;
+    background-position: center 40%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+/* Header - UPDATED with blur background */
+/* Header - EXACTLY like options.css */
+.header {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 50px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.brand {
+    color: #000000;
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.avatar:hover {
+    border-color: rgba(255,255,255,0.6);
+}
+
+/* Adjust main title margin for fixed header */
+/* Main Title - Enhanced readability */
+/* Main Title - Professional readability enhancement */
+/* Main Title - Maximum visibility */
+.main-title {
+    text-align: center;
+    margin-top: 140px;
+    margin-bottom: 30px;
+}
+
+.main-title h1 {
+    font-size: 48px;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 0px #000000,
+                 6px 6px 12px rgba(0,0,0,0.8),
+                 0px 0px 20px rgba(0,0,0,0.5);
+    -webkit-text-stroke: 1px #000000;
+}
+
+.main-title p {
+    font-size: 22px;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-shadow: 2px 2px 0px #000000,
+                 4px 4px 8px rgba(0,0,0,0.9),
+                 0px 0px 16px rgba(0,0,0,0.6);
+    -webkit-text-stroke: 0.5px #000000;
+    letter-spacing: 0.8px;
+    line-height: 1.5;
+}
+
+
+
+/* Responsive header styles - EXACTLY from options.css */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .header {
+        padding: 0 30px;
+    }
+    
+    .brand {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .header {
+        height: 70px;
+        padding: 0 25px;
+    }
+    
+    .logo {
+        width: 45px;
+        height: 40px;
+    }
+    
+    .brand {
+        font-size: 16px;
+    }
+    
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .main-title {
+        margin-top: 110px;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        height: 60px;
+        padding: 0 20px;
+    }
+    
+    .logo {
+        width: 40px;
+        height: 35px;
+    }
+    
+    .brand {
+        font-size: 14px;
+    }
+    
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .main-title {
+        margin-top: 100px;
+    }
+}
+
+/* Main Title - Adjusted for fixed header */
+.main-title {
+    text-align: center;
+    margin-top: 150px;
+    margin-bottom: 30px;
+}
+
+.main-title h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+}
+
+.main-title p {
+    font-size: 18px;
+    color: #333333;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+}
+
+/* Upload Button */
+.upload-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.upload-btn {
+    background: #2CFF05;
+    color: #000000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(44,255,5,0.3);
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #30FF14;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(44,255,5,0.4);
+}
+
+/* Metrics Cards */
+.metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    text-align: left;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-card.recommendation {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.metric-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #333333;
+}
+
+.metric-value.temperature-low {
+    color: #EF4444;
+    font-weight: 900;
+}
+
+.recommendation-text {
+    color: #EF4444;
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.action-btn {
+    background: #EF4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: center;
+    min-width: 100px;
+}
+
+.action-btn:hover {
+    background: #DC2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Charts Container */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    min-height: 350px;
+}
+
+.chart-card:hover {
+    transform: translateY(-5px);
+}
+
+.chart-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+    padding: 25px 25px 0 25px;
+}
+
+.chart-content {
+    height: 300px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8F9FA;
+}
+
+.chart-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Plots Container */
+.plots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 80px auto;
+    padding: 0 20px;
+}
+
+.plot-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    min-height: 300px;
+}
+
+.plot-card:hover {
+    transform: translateY(-5px);
+}
+
+.plot-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000;
+    padding: 25px 25px 0 25px;
+}
+
+.plot-content {
+    height: 250px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8F9FA;
+}
+
+.plot-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Back Link */
+.back-link {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 12px 18px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.back-link:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateX(-5px);
+}
+
+/* Notification System */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 2000;
+    transform: translateX(400px);
+    transition: all 0.4s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background: rgba(34, 197, 94, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.notification.info {
+    background: rgba(59, 130, 246, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive Design */
+@media (min-width: 1200px) {
+    .metrics-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .charts-container,
+    .plots-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .header {
+        padding: 15px 30px;
+    }
+    
+    .main-title {
+        margin-top: 130px;
+    }
+    
+    .main-title h1 {
+        font-size: 40px;
+    }
+    
+    .metrics-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .charts-container,
+    .plots-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 20px;
+    }
+    
+    .logo-icon {
+        width: 40px;
+        height: 35px;
+        padding: 3px;
+    }
+    
+    .logo-text {
+        font-size: 18px;
+        padding: 4px 10px;
+    }
+    
+    .main-title {
+        margin-top: 110px;
+    }
+    
+    .main-title h1 {
+        font-size: 32px;
+    }
+    
+    .main-title p {
+        font-size: 16px;
+    }
+    
+    .upload-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .metrics-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 0 15px;
+    }
+    
+    .charts-container,
+    .plots-container {
+        gap: 15px;
+        padding: 0 15px;
+    }
+    
+    .chart-card,
+    .plot-card {
+        min-height: 280px;
+    }
+    
+    .chart-content,
+    .plot-content {
+        height: 200px;
+    }
+    
+    .back-link {
+        bottom: 20px;
+        left: 20px;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+    
+    .notification {
+        top: 90px;
+        right: 15px;
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 15px;
+    }
+    
+    .logo-icon {
+        width: 35px;
+        height: 30px;
+    }
+    
+    .logo-text {
+        font-size: 16px;
+        padding: 3px 8px;
+    }
+    
+    .chart-card,
+    .plot-card {
+        min-height: 220px;
+    }
+    
+    .chart-content,
+    .plot-content {
+        height: 160px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .metric-card,
+    .chart-card,
+    .plot-card,
+    .upload-btn,
+    .action-btn,
+    .back-link,
+    .header {
+        transition: none;
+    }
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+/* All your existing CSS code stays the same... */
+
+/* Brand link styling - ADD THIS AT THE END */
+.brand-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.brand-link:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.brand-link:hover .brand {
+    text-shadow: 2px 2px 8px rgba(44, 255, 5, 0.4);
+}
+
+/* Update existing .brand class to this: */
+.brand {
+    color: #000000;
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    transition: all 0.3s ease;
+}
+
+/* Responsive brand link styles - ADD AT THE END */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .brand {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .brand {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .brand {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand {
+        font-size: 12px;
+        max-width: 150px;
+    }
+}

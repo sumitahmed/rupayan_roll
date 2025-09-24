@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgriSense AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <!-- Back to Home Link -->
+    <a href="../Landing_Page/landing.html" class="back-link">← Back to Home</a>
+    
+    <!-- Login Panel -->
+    <div id="panel">
+        <!-- Logo -->
+        <img id="logo" src="../shared/images/icons/logo-360298.png" alt="AgriSense AI">
+        
+        <!-- Title -->
+        <h1 id="title">LOGIN</h1>
+        <p id="subtitle">Welcome Back</p>
+        
+        <!-- Form -->
+        <form id="login-form">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+                <div class="error-message" id="username-error"></div>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+                <div class="error-message" id="password-error"></div>
+            </div>
+            
+            <button type="submit" id="sign-in">Sign In</button>
+        </form>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

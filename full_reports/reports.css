@@ -1,0 +1,701 @@
+/* AgriSense AI Dashboard - Complete Responsive Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-image: url('../shared/images/backgrounds/bg-fullReport.jpeg');
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    width: 100%;
+    max-width: 1440px;
+    min-height: 100vh;
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header - EXACTLY like soil-moisture (corrected version) */
+.header {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.logo {
+    width: 50px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.brand {
+    color: #000000;
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.avatar:hover {
+    border-color: rgba(255,255,255,0.6);
+}
+
+/* Main Title Section - Adjusted for fixed header */
+.main-title {
+    position: absolute;
+    left: 50%;
+    top: 160px;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+}
+
+.dashboard-title {
+    color: black;
+    font-size: clamp(36px, 6vw, 75px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+}
+
+.dashboard-subtitle {
+    color: #1a1a1a;
+    font-size: clamp(16px, 3vw, 24px);
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 15px 30px;
+    border-radius: 30px;
+    display: inline-block;
+    margin: 0 auto;
+    max-width: 700px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+}
+
+/* Search Bar */
+.search-bar {
+    position: absolute;
+    left: 50%;
+    top: 360px;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1240px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.upload-btn {
+    width: 200px;
+    height: 50px;
+    background: #2CFF05;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    font-size: 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(44,255,5,0.3);
+}
+
+.upload-btn:hover {
+    background: #25D900;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(44,255,5,0.4);
+}
+
+.upload-icon {
+    font-size: 20px;
+}
+
+/* Metrics Row */
+.metrics-row {
+    position: absolute;
+    left: 50%;
+    top: 500px;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 90%;
+    max-width: 1240px;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.metric-card.excellent {
+    border-left: 5px solid #22C55E;
+}
+
+.metric-card.moderate {
+    border-left: 5px solid #2196F3;
+}
+
+.metric-card.low {
+    border-left: 5px solid #EF4444;
+}
+
+.metric-label {
+    color: black;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 900;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.metric-value {
+    font-size: clamp(32px, 5vw, 45px);
+    font-weight: 900;
+}
+
+.status-excellent {
+    color: #22C55E;
+    text-shadow: 1px 1px 2px rgba(34, 197, 94, 0.3);
+}
+
+.status-moderate {
+    color: #2196F3;
+    text-shadow: 1px 1px 2px rgba(33, 150, 243, 0.3);
+}
+
+.status-low {
+    color: #EF4444;
+    text-shadow: 1px 1px 2px rgba(239, 68, 68, 0.3);
+    animation: pulse 2s infinite;
+}
+
+/* Charts Row */
+.charts-row {
+    position: absolute;
+    left: 50%;
+    top: 700px;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    width: 90%;
+    max-width: 1240px;
+}
+
+.chart-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 400px;
+}
+
+.chart-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.chart-title {
+    color: black;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart-placeholder img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.chart-placeholder img:hover {
+    transform: scale(1.02);
+}
+
+/* Plots Row */
+.plots-row {
+    position: absolute;
+    left: 50%;
+    top: 1160px;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    width: 90%;
+    max-width: 1240px;
+    margin-bottom: 100px;
+}
+
+.plot-container {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 350px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.plot-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.plot-title {
+    color: black;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.plot-placeholder img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.plot-placeholder img:hover {
+    transform: scale(1.02);
+}
+
+/* Back Link */
+.back-link {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 12px 18px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.back-link:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateX(-5px);
+}
+
+/* Responsive header styles - EXACTLY from soil-moisture */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .header {
+        padding: 0 30px;
+    }
+    
+    .brand {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .header {
+        height: 70px;
+        padding: 0 25px;
+    }
+    
+    .logo {
+        width: 45px;
+        height: 40px;
+    }
+    
+    .brand {
+        font-size: 16px;
+    }
+    
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .main-title {
+        top: 140px;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        height: 60px;
+        padding: 0 20px;
+    }
+    
+    .logo-section {
+        gap: 10px;
+    }
+    
+    .logo {
+        width: 40px;
+        height: 35px;
+    }
+    
+    .brand {
+        font-size: 14px;
+    }
+    
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .main-title {
+        top: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0 15px;
+    }
+    
+    .logo-section {
+        gap: 8px;
+    }
+    
+    .brand {
+        font-size: 12px;
+        max-width: 150px;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* RESPONSIVE DESIGN */
+/* Large Tablets and Small Desktops */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+    
+    .main-title {
+        top: 140px;
+    }
+    
+    .search-bar {
+        top: 320px;
+        height: 80px;
+    }
+    
+    .metrics-row {
+        top: 440px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .charts-row {
+        top: 620px;
+        grid-template-columns: 1fr;
+    }
+    
+    .plots-row {
+        top: 1060px;
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+    
+    .main-title {
+        top: 100px;
+        width: 95%;
+    }
+    
+    .search-bar {
+        top: 260px;
+        height: 70px;
+        width: 95%;
+    }
+    
+    .upload-btn {
+        width: 160px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .metrics-row {
+        top: 360px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        width: 95%;
+    }
+    
+    .metric-card {
+        padding: 20px 15px;
+        min-height: 120px;
+    }
+    
+    .charts-row {
+        top: 540px;
+        width: 95%;
+        gap: 20px;
+    }
+    
+    .chart-container {
+        padding: 20px;
+        min-height: 320px;
+    }
+    
+    .chart-placeholder img {
+        height: 220px;
+    }
+    
+    .plots-row {
+        top: 920px;
+        width: 95%;
+        gap: 20px;
+        margin-bottom: 80px;
+    }
+    
+    .plot-container {
+        padding: 20px;
+        min-height: 280px;
+    }
+    
+    .plot-placeholder img {
+        height: 180px;
+    }
+    
+    .back-link {
+        bottom: 20px;
+        left: 20px;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .metrics-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .metric-card {
+        min-height: 100px;
+        padding: 15px 10px;
+    }
+    
+    .charts-row {
+        gap: 15px;
+    }
+    
+    .chart-container {
+        padding: 15px;
+        min-height: 280px;
+    }
+    
+    .chart-placeholder img {
+        height: 180px;
+    }
+    
+    .plots-row {
+        gap: 15px;
+    }
+    
+    .plot-container {
+        padding: 15px;
+        min-height: 240px;
+    }
+    
+    .plot-placeholder img {
+        height: 150px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .metric-card,
+    .chart-container,
+    .plot-container,
+    .upload-btn,
+    .back-link,
+    .header {
+        transition: none;
+    }
+    
+    .status-low {
+        animation: none;
+    }
+    
+    .chart-placeholder img,
+    .plot-placeholder img {
+        transition: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .search-bar {
+        background: rgba(255,255,255,0.9);
+        border: 2px solid #000000;
+    }
+    
+    .metric-card {
+        border: 2px solid #000000;
+    }
+}
+/* All your existing CSS code stays the same... */
+
+/* Brand link styling - ADD THIS AT THE END */
+.brand-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.brand-link:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.brand-link:hover .brand {
+    text-shadow: 2px 2px 8px rgba(44, 255, 5, 0.4);
+}
+
+/* Update existing .brand class to this: */
+.brand {
+    color: #000000;
+    font-weight: 800;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    transition: all 0.3s ease;
+}
+
+/* Responsive brand link styles - ADD AT THE END */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .brand {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .brand {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .brand {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand {
+        font-size: 12px;
+        max-width: 150px;
+    }
+}

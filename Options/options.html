@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Options - AgriSense AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <img src="../shared/images/icons/logo-360298.png" alt="AgriSense" class="logo">
+                <!-- REPLACE WITH THIS -->
+<a href="../Landing_Page/landing.html" class="brand-link">
+    <span class="brand">AgriSense AI</span>
+</a>
+
+            </div>
+            <div class="user-section">
+                <img src="../shared/images/avatars/avatar.png" alt="User Avatar" class="avatar">
+            </div>
+        </header>
+
+        <!-- Analytics Cards Grid -->
+        <main class="analytics-grid">
+            <!-- Soil Moisture Card -->
+            <div class="card" data-analytics="soil-moisture" onclick="navigateToAnalytics('soil-moisture')">
+                <div class="card-content">
+                    <img src="../shared/images/icons/icon-water-drop.svg" alt="Soil Moisture" class="card-icon">
+                    <h3 class="card-title">Soil Moisture</h3>
+                    <p class="card-subtitle">Monitor soil hydration levels</p>
+                    <div class="card-divider"></div>
+                    <span class="card-cta">View Analytics →</span>
+                </div>
+            </div>
+
+            <!-- Leaf Wetness Card -->
+            <div class="card" data-analytics="leaf-wetness" onclick="navigateToAnalytics('leaf-wetness')">
+                <div class="card-content">
+                    <img src="../shared/images/icons/icon-leaf.svg" alt="Leaf Wetness" class="card-icon">
+                    <h3 class="card-title">Leaf Wetness</h3>
+                    <p class="card-subtitle">Track leaf moisture content</p>
+                    <div class="card-divider"></div>
+                    <span class="card-cta">View Analytics →</span>
+                </div>
+            </div>
+
+            <!-- Crop Health Card -->
+            <div class="card" data-analytics="crop-health" onclick="navigateToAnalytics('crop-health')">
+                <div class="card-content">
+                    <img src="../shared/images/icons/icon-harvest.svg" alt="Crop Health" class="card-icon">
+                    <h3 class="card-title">Crop Health</h3>
+                    <p class="card-subtitle">Assess plant wellness status</p>
+                    <div class="card-divider"></div>
+                    <span class="card-cta">View Analytics →</span>
+                </div>
+            </div>
+
+            <!-- Soil Temperature Card -->
+            <div class="card" data-analytics="soil-temperature" onclick="navigateToAnalytics('soil-temperature')">
+                <div class="card-content">
+                    <img src="../shared/images/icons/icon-thermometer.svg" alt="Soil Temperature" class="card-icon">
+                    <h3 class="card-title">Soil Temperature</h3>
+                    <p class="card-subtitle">Monitor ground temperature</p>
+                    <div class="card-divider"></div>
+                    <span class="card-cta">View Analytics →</span>
+                </div>
+            </div>
+
+            <!-- Full Reports Card -->
+            <div class="card" data-analytics="reports" onclick="navigateToAnalytics('reports')">
+                <div class="card-content">
+                    <img src="../shared/images/icons/icon-diagram.svg" alt="Full Reports" class="card-icon">
+                    <h3 class="card-title">Full Reports</h3>
+                    <p class="card-subtitle">Complete analytics overview</p>
+                    <div class="card-divider"></div>
+                    <span class="card-cta">View Reports →</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Back to Landing Link -->
+        <a href="../Landing_Page/landing.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
