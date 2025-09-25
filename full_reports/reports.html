@@ -1,111 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Reports - AgriSense AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <title>AgriSense AI - Full Report</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="reports.css">
 </head>
-
 <body>
-    <div class="dashboard-container">
-        <!-- Header Section -->
-        <header class="header">
-            <div class="logo-section">
-                <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
-                <!-- REPLACE WITH THIS -->
-<a href="../Landing_Page/landing.html" class="brand-link">
-    <span class="brand">AgriSense AI</span>
-</a>
-
-            </div>
-
-            <div class="user-section">
-                <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
-            </div>
-        </header>
-
-        <!-- Full Report Button - Top Right Semi-Circle -->
-        <!-- <div class="full-report-btn" onclick="generateFullReport()">
-            <img src="../shared/images/icons/top_right_semicircle.jpeg" alt="Full Report Icon" class="report-icon">
-            <div class="report-text">FULL<br>REPORT</div>
-        </div> -->
-
-        <!-- Main Title Section -->
-        <div class="main-title">
-            <h1 class="dashboard-title">Full Report Dashboard</h1>
-            <p class="dashboard-subtitle">Comprehensive farm analytics and insights for optimal agricultural management
-            </p>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
+            <a href="../Landing_Page/lnding.html" class="brand-link">
+                <span class="brand">AgriSense AI</span>
+            </a>
         </div>
-
-        <!-- Search/Upload Bar -->
-        <div class="search-bar">
-            <button class="upload-btn" onclick="handleUpload()">
-                <span class="upload-icon">📁</span>
-                Upload Files
-            </button>
+        
+        <div class="user-section">
+            <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
         </div>
+    </header>
 
-        <!-- Metrics Row -->
-        <div class="metrics-row">
-            <div class="metric-card excellent">
-                <div class="metric-label">Crop Health</div>
-                <div class="metric-value status-excellent">94%</div>
-            </div>
-            <div class="metric-card low">
-                <div class="metric-label">Soil Moisture</div>
-                <div class="metric-value status-low">23%</div>
-            </div>
-            <div class="metric-card moderate">
-                <div class="metric-label">Leaf Wetness</div>
-                <div class="metric-value status-moderate">87%</div>
-            </div>
-            <div class="metric-card moderate">
-                <div class="metric-label">Temperature</div>
-                <div class="metric-value status-moderate">24°C</div>
-            </div>
-        </div>
-
-        <!-- Charts Row -->
-        <div class="charts-row">
-            <div class="chart-container" onclick="viewChart('zone')">
-                <h3 class="chart-title">Zone Distribution</h3>
-                <div class="chart-placeholder">
-                    <img src="../shared/images/backgrounds/bg-crop.png" alt="Zone Distribution Chart">
-                </div>
-            </div>
-            <div class="chart-container" onclick="viewChart('heatmap')">
-                <h3 class="chart-title">Heat Map</h3>
-                <div class="chart-placeholder">
-                    <img src="../shared/images/backgrounds/bg-leaf.png" alt="Heat Map Chart">
-                </div>
-            </div>
-        </div>
-
-        <!-- Plots Row -->
-        <div class="plots-row">
-            <div class="plot-container" onclick="viewPlot(1)">
-                <h3 class="plot-title">Plot 1</h3>
-                <div class="plot-placeholder">
-                    <img src="../shared/images/backgrounds/bg-soil.png" alt="Plot 1 Analysis">
-                </div>
-            </div>
-            <div class="plot-container" onclick="viewPlot(2)">
-                <h3 class="plot-title">Plot 2</h3>
-                <div class="plot-placeholder">
-                    <img src="../shared/images/backgrounds/bg-soilTemp.jpeg" alt="Plot 2 Analysis">
-                </div>
-            </div>
-        </div>
-
-        <!-- Back Navigation -->
-        <a href="../Options/options.html" class="back-link">← Back to Options</a>
+    <!-- Main Title -->
+    <div class="main-title">
+        <h1>Analytics Dashboard</h1>
+        <p>Monitor your farm's performance with real time data and insights</p>
     </div>
 
+    <!-- Full Report Badge -->
+    <!-- <div class="report-badge">
+        <div class="badge-content">
+            <span class="badge-text">FULL REPORT</span>
+        </div>
+    </div> -->
+
+    <!-- Upload Files Button -->
+    <div class="upload-container">
+        <button class="upload-btn" onclick="handleUpload()">🗂️ Upload Files</button>
+    </div>
+
+    <!-- Metrics Cards - EXACT MATCH TO YOUR IMAGE -->
+    <div class="metrics-container">
+        <div class="metric-card crop-health">
+            <div class="metric-title">Overall Crop Health</div>
+            <div class="metric-value excellent">Excellent</div>
+        </div>
+
+        <div class="metric-card soil-temp">
+            <div class="metric-title">Soil Temperature</div>
+            <div class="metric-value moderate">Moderate</div>
+        </div>
+
+        <div class="metric-card soil-moisture">
+            <div class="metric-title">Soil Moisture</div>
+            <div class="metric-value low">Low</div>
+        </div>
+
+        <div class="metric-card leaf-wetness">
+            <div class="metric-title">Leaf Wetness</div>
+            <div class="metric-value excellent">Excellent</div>
+        </div>
+    </div>
+
+    <!-- Charts Section - MAP WITH SEARCH BAR -->
+    <div class="charts-container">
+        <!-- Zone Distribution Map with Search Bar -->
+        <div class="chart-card map-container">
+            <div class="map-header">
+                <div class="chart-title">Zone Distribution</div>
+                <div class="map-search-bar">
+                    <input type="text" id="locationSearch" placeholder="Search location..." class="map-search-input">
+                    <button onclick="searchLocation()" class="map-search-button">Search</button>
+                </div>
+            </div>
+            <div id="reportsMap" class="field-map"></div>
+        </div>
+
+        <!-- Heat Map - UNCHANGED -->
+        <div class="chart-card">
+            <div class="chart-title">Heat Map</div>
+            <div class="chart-content">
+                <img src="../shared/images/charts/heat-map.png" alt="Heat Map Chart">
+            </div>
+        </div>
+    </div>
+
+    <!-- Plots Section - BOTH UNCHANGED -->
+    <div class="plots-container">
+        <div class="plot-card">
+            <div class="plot-title">Plot 1</div>
+            <div class="plot-content">
+                <img src="../shared/images/plots/plot-1.png" alt="Plot 1 Analysis">
+            </div>
+        </div>
+
+        <div class="plot-card">
+            <div class="plot-title">Plot 2</div>
+            <div class="plot-content">
+                <img src="../shared/images/plots/plot-2.png" alt="Plot 2 Analysis">
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Link -->
+    <a href="../Options/options.html" class="back-link">← Back to Dashboard</a>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- JavaScript -->
     <script src="reports.js"></script>
 </body>
-
 </html>

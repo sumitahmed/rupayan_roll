@@ -3,108 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Health Analytics - AgriSense AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>AgriSense AI - Crop Health Analytics</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="crop-health.css">
 </head>
 <body>
     <!-- Header -->
-     <header class="header">
+    <header class="header">
         <div class="logo-section">
             <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
-            <!-- REPLACE WITH THIS -->
-<a href="../Landing_Page/landing.html" class="brand-link">
-    <span class="brand">AgriSense AI</span>
-</a>
-
+            <a href="../Landing_Page/lnding.html" class="brand-link">
+                <span class="brand">AgriSense AI</span>
+            </a>
         </div>
-
+        
         <div class="user-section">
             <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
         </div>
     </header>
-    
-    <!-- Semi-Circle Top Right -->
-    <!-- <div class="semicircle">
-        <img src="../shared/images/icons/ellipse-photo-389f35.png" alt="Crop Health" class="semicircle-img">
-        <div class="semicircle-text">
-            CROP<br>HEALTH
-        </div>
-    </div> -->
-    
+
     <!-- Main Title -->
     <div class="main-title">
         <h1>Analytics Dashboard</h1>
         <p>Monitor your farm's performance with real time data and insights</p>
     </div>
-    
-    <!-- Upload Button -->
+
+    <!-- Upload Files Button -->
     <div class="upload-container">
-        <button class="upload-btn">
-            📁 Upload Files
-        </button>
+        <button class="upload-btn" onclick="handleUpload()">🗂️ Upload Files</button>
     </div>
-    
-    <!-- Metrics Cards -->
+
+    <!-- Metrics Cards - EXACT MATCH TO YOUR IMAGE -->
     <div class="metrics-container">
         <div class="metric-card">
             <div class="metric-title">Crop Health</div>
             <div class="metric-value excellent">Excellent</div>
         </div>
-        
+
         <div class="metric-card">
             <div class="metric-title">Mean</div>
             <div class="metric-value">0.753</div>
         </div>
-        
+
         <div class="metric-card">
             <div class="metric-title">Standard Deviation</div>
             <div class="metric-value">0.173</div>
         </div>
-        
+
         <div class="metric-card recommendation">
             <div class="metric-title">Recommendation</div>
-            <div class="metric-value small">The Crop is Good and Stable</div>
+            <div class="recommendation-text">The Crop is Good<br>and Stable</div>
         </div>
     </div>
-    
-    <!-- Charts Row -->
+
+    <!-- Charts Section - MAP WITH SEARCH BAR -->
     <div class="charts-container">
-        <div class="chart-card">
-            <div class="chart-title">Zone Distribution</div>
-            <div class="chart-content">
-                <img src="../shared/images/backgrounds/bg-crop.png" alt="Zone Distribution">
+        <!-- Zone Distribution Map with Search Bar -->
+        <div class="chart-card map-container">
+            <div class="map-header">
+                <div class="chart-title">Zone Distribution</div>
+                <div class="map-search-bar">
+                    <input type="text" id="locationSearch" placeholder="Search location..." class="map-search-input">
+                    <button onclick="searchLocation()" class="map-search-button">Search</button>
+                </div>
             </div>
+            <div id="cropHealthMap" class="field-map"></div>
         </div>
-        
+
+        <!-- Heat Map - UNCHANGED -->
         <div class="chart-card">
             <div class="chart-title">Heat Map</div>
             <div class="chart-content">
-                <img src="../shared/images/backgrounds/bg-crop.png" alt="Heat Map">
+                <img src="../shared/images/charts/heat-map.png" alt="Heat Map Chart">
             </div>
         </div>
     </div>
-    
-    <!-- Plots Row -->
+
+    <!-- Plots Section - BOTH UNCHANGED -->
     <div class="plots-container">
         <div class="plot-card">
             <div class="plot-title">Plot 1</div>
             <div class="plot-content">
-                <img src="../shared/images/backgrounds/bg-crop.png" alt="Plot 1">
+                <img src="../shared/images/plots/plot-1.png" alt="Plot 1 Analysis">
             </div>
         </div>
-        
+
         <div class="plot-card">
             <div class="plot-title">Plot 2</div>
             <div class="plot-content">
-                <img src="../shared/images/backgrounds/bg-crop.png" alt="Plot 2">
+                <img src="../shared/images/plots/plot-2.png" alt="Plot 2 Analysis">
             </div>
         </div>
     </div>
-    
-    <!-- Back Link -->
-    <a href="../Options/options.html" class="back-link">← Back to Options</a>
 
+    <!-- Back Link -->
+    <a href="../Options/options.html" class="back-link">← Back to Dashboard</a>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- JavaScript -->
     <script src="crop-health.js"></script>
 </body>
 </html>

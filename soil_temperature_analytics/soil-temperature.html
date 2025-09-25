@@ -1,93 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriSense AI - Soil Temperature Analytics</title>
-
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
+    
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="soil-temperature.css">
 </head>
-
 <body>
-    <!-- Header with Logo and User Avatar -->
-    <!-- Header with Logo and User Avatar -->
+    <!-- Header -->
     <header class="header">
         <div class="logo-section">
             <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
-            <!-- UPDATED: Added clickable link to landing page -->
-            <a href="../Landing_Page/landing.html" class="brand-link">
-                <!-- REPLACE WITH THIS -->
-<a href="../Landing_Page/landing.html" class="brand-link">
-    <span class="brand">AgriSense AI</span>
-</a>
-
+            <a href="../Landing_Page/lnding.html" class="brand-link">
+                <span class="brand">AgriSense AI</span>
             </a>
         </div>
-
+        
         <div class="user-section">
             <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
         </div>
     </header>
 
-
-    <!-- Main Content -->
+    <!-- Main Title -->
     <div class="main-title">
         <h1>Analytics Dashboard</h1>
         <p>Monitor your farm's performance with real time data and insights</p>
     </div>
+
+    <!-- Soil Temperature Badge -->
+    <!-- <div class="temperature-badge">
+        <div class="badge-content">
+            <span class="badge-text">SOIL TEMPERATURE</span>
+        </div>
+    </div> -->
 
     <!-- Upload Files Button -->
     <div class="upload-container">
         <button class="upload-btn" onclick="handleUpload()">🗂️ Upload Files</button>
     </div>
 
-    <!-- Metrics Cards -->
+    <!-- Metrics Cards - EXACT MATCH TO YOUR IMAGE -->
     <div class="metrics-container">
-        <!-- Soil Temperature Card -->
-        <div class="metric-card">
+        <div class="metric-card soil-temperature-red">
             <div class="metric-title">Soil Temperature</div>
-            <div class="metric-value temperature-low">Low</div>
+            <div class="metric-value low">Low</div>
         </div>
 
-        <!-- Mean Card -->
-        <div class="metric-card">
+        <div class="metric-card mean-white">
             <div class="metric-title">Mean</div>
             <div class="metric-value">0.753</div>
         </div>
 
-        <!-- Standard Deviation Card -->
-        <div class="metric-card">
+        <div class="metric-card std-white">
             <div class="metric-title">Standard Deviation</div>
             <div class="metric-value">0.173</div>
         </div>
 
-        <!-- Recommendation Card -->
-        <div class="metric-card recommendation">
+        <div class="metric-card recommendation-red">
             <div class="metric-title">Recommendation</div>
-            <div class="recommendation-text">
-                Soil Overheating<br>
-                Risk of Stress
-            </div>
-            <button class="action-btn" onclick="takeAction()">Take Action</button>
+            <div class="metric-subtitle">Soil Overheating</div>
+            <button class="action-btn">Take Action</button>
         </div>
     </div>
 
-    <!-- Charts Section -->
+    <!-- Charts Section - MAP WITH SEARCH BAR -->
     <div class="charts-container">
-        <!-- Zone Distribution Chart -->
-        <div class="chart-card">
-            <div class="chart-title">Zone Distribution</div>
-            <div class="chart-content">
-                <img src="../shared/images/charts/zone-distribution.png" alt="Zone Distribution Chart">
+        <!-- Zone Distribution Map with Search Bar -->
+        <div class="chart-card map-container">
+            <div class="map-header">
+                <div class="chart-title">Zone Distribution</div>
+                <div class="map-search-bar">
+                    <input type="text" id="locationSearch" placeholder="Search location..." class="map-search-input">
+                    <button onclick="searchLocation()" class="map-search-button">Search</button>
+                </div>
             </div>
+            <div id="soilTemperatureMap" class="field-map"></div>
         </div>
 
-        <!-- Heat Map Chart -->
+        <!-- Heat Map - UNCHANGED -->
         <div class="chart-card">
             <div class="chart-title">Heat Map</div>
             <div class="chart-content">
@@ -96,9 +95,8 @@
         </div>
     </div>
 
-    <!-- Plots Section -->
+    <!-- Plots Section - BOTH UNCHANGED -->
     <div class="plots-container">
-        <!-- Plot 1 -->
         <div class="plot-card">
             <div class="plot-title">Plot 1</div>
             <div class="plot-content">
@@ -106,7 +104,6 @@
             </div>
         </div>
 
-        <!-- Plot 2 -->
         <div class="plot-card">
             <div class="plot-title">Plot 2</div>
             <div class="plot-content">
@@ -115,11 +112,14 @@
         </div>
     </div>
 
-    <!-- Back to Dashboard Link - CORRECTED PATH -->
+    <!-- Back Link -->
     <a href="../Options/options.html" class="back-link">← Back to Dashboard</a>
 
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
     <!-- JavaScript -->
     <script src="soil-temperature.js"></script>
 </body>
-
 </html>

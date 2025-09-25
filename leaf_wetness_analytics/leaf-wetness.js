@@ -1,331 +1,247 @@
-/**
- * AgriSense AI - Leaf Wetness Analytics
- * Disease prevention and crop health monitoring
- */
+let leafWetnessMap;
 
-// Mock data for leaf wetness
-const WETNESS_DATA = {
-    current: {
-        wetness: 18,
-        average24h: 22,
-        range: "15-28%",
-        diseaseRisk: "LOW"
-    },
+// Handle file upload
+function handleUpload() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.csv,.xlsx,.json';
+    fileInput.multiple = true;
     
-    recentReadings: [
-        { time: "14:30", wetness: 18, risk: "Low" },
-        { time: "14:00", wetness: 22, risk: "Low" },
-        { time: "13:30", wetness: 25, risk: "Medium" },
-        { time: "13:00", wetness: 28, risk: "Medium" },
-        { time: "12:30", wetness: 32, risk: "High" },
-        { time: "12:00", wetness: 29, risk: "Medium" },
-        { time: "11:30", wetness: 24, risk: "Low" },
-        { time: "11:00", wetness: 20, risk: "Low" }
-    ],
+    fileInput.onchange = function(event) {
+        const files = event.target.files;
+        if (files.length > 0) {
+            showNotification(`✅ Successfully uploaded ${files.length} file(s) for wetness analysis!`, 'success');
+        }
+    };
     
-    weather: {
-        humidity: 65,
-        dewPoint: 12,
-        windSpeed: 8
-    }
-};
-
-// Initialize dashboard
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🍃 Leaf Wetness Analytics Dashboard loaded!');
-    initializeDashboard();
-});
-/**
- * AgriSense AI - Soil Temperature Analytics
- * Simple functionality matching Figma design
- */
-
-// ADD THIS NAVIGATION CODE AT THE BEGINNING
-// Navigation to landing page
-function navigateToLanding() {
-    // Add transition effect
-    document.body.style.transition = 'opacity 0.3s ease';
-    document.body.style.opacity = '0.8';
-    
-    // Navigate after animation
-    setTimeout(() => {
-        window.location.href = '../Landing_Page/landing.html';
-    }, 300);
+    fileInput.click();
 }
 
-// Enhanced header interactions
-function initHeaderInteractions() {
-    const brandLink = document.querySelector('.brand-link');
-    const logo = document.querySelector('.logo');
+// Initialize map with search functionality
+function initializeLeafWetnessMap() {
+    const defaultLat = 10.8505;
+    const defaultLng = 76.2711;
     
-    if (brandLink) {
-        brandLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateToLanding();
-        });
-    }
+    leafWetnessMap = L.map('leafWetnessMap').setView([defaultLat, defaultLng], 10);
     
-    // Make logo also clickable
-    if (logo) {
-        logo.style.cursor = 'pointer';
-        logo.addEventListener('click', navigateToLanding);
-    }
-}
-
-// THEN UPDATE YOUR EXISTING DOMContentLoaded EVENT:
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🌡️ Soil Temperature Analytics loaded!');
-    initHeaderInteractions(); // ADD THIS LINE
-    addInteractivity(); // Your existing function
-});
-
-// Rest of your existing JavaScript code stays the same...
-
-function initializeDashboard() {
-    updateMetrics();
-    updateWeatherData();
-    populateReadingsTable();
-    startRealTimeUpdates();
-    addInteractivity();
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(leafWetnessMap);
     
-    console.log('✅ Leaf Wetness Dashboard initialized successfully');
-}
-
-// Update metric displays
-function updateMetrics() {
-    const currentWetness = document.getElementById('current-wetness');
-    const avgWetness = document.getElementById('avg-wetness');
-    const wetnessRange = document.getElementById('wetness-range');
-    const diseaseRisk = document.getElementById('disease-risk');
+    // Add leaf wetness markers
+    const wetnessMarkers = [
+        { lat: 10.8485, lng: 76.2695, wetness: 25, zone: 'A1', status: 'Low', risk: 'Low Disease Risk' },
+        { lat: 10.8525, lng: 76.2730, wetness: 35, zone: 'A2', status: 'Low', risk: 'Minimal Risk' },
+        { lat: 10.8465, lng: 76.2675, wetness: 20, zone: 'B1', status: 'Very Low', risk: 'No Risk' },
+        { lat: 10.8545, lng: 76.2750, wetness: 30, zone: 'B2', status: 'Low', risk: 'Low Risk' }
+    ];
     
-    if (currentWetness) currentWetness.textContent = `${WETNESS_DATA.current.wetness}%`;
-    if (avgWetness) avgWetness.textContent = `${WETNESS_DATA.current.average24h}%`;
-    if (wetnessRange) wetnessRange.textContent = WETNESS_DATA.current.range;
-    if (diseaseRisk) diseaseRisk.textContent = WETNESS_DATA.current.diseaseRisk;
-    
-    // Add pulse animation to current reading
-    if (currentWetness) {
-        currentWetness.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            currentWetness.style.animation = '';
-        }, 500);
-    }
-}
-
-// Update weather data
-function updateWeatherData() {
-    const humidity = document.getElementById('humidity');
-    const dewPoint = document.getElementById('dew-point');
-    const windSpeed = document.getElementById('wind-speed');
-    
-    if (humidity) humidity.textContent = `${WETNESS_DATA.weather.humidity}%`;
-    if (dewPoint) dewPoint.textContent = `${WETNESS_DATA.weather.dewPoint}°C`;
-    if (windSpeed) windSpeed.textContent = `${WETNESS_DATA.weather.windSpeed} km/h`;
-}
-
-// Populate readings table
-function populateReadingsTable() {
-    const tableBody = document.getElementById('readings-data');
-    if (!tableBody) return;
-    
-    tableBody.innerHTML = '';
-    
-    WETNESS_DATA.recentReadings.forEach(reading => {
-        const row = document.createElement('div');
-        row.className = 'table-row';
+    wetnessMarkers.forEach(marker => {
+        const color = getWetnessColor(marker.wetness);
         
-        let statusClass = 'status-low';
-        if (reading.risk === 'Medium') statusClass = 'status-medium';
-        if (reading.risk === 'High') statusClass = 'status-high';
-        
-        row.innerHTML = `
-            <span>${reading.time}</span>
-            <span>${reading.wetness}%</span>
-            <span class="${statusClass}">${reading.risk}</span>
-        `;
-        
-        tableBody.appendChild(row);
+        L.circleMarker([marker.lat, marker.lng], {
+            radius: 8,
+            fillColor: color,
+            color: '#FFFFFF',
+            weight: 2,
+            fillOpacity: 0.9,
+            opacity: 1
+        })
+        .addTo(leafWetnessMap)
+        .bindPopup(`
+            <div style="text-align: center; min-width: 120px;">
+                <div style="font-weight: 700; margin-bottom: 4px;">Zone ${marker.zone}</div>
+                <div style="font-weight: 600; margin-bottom: 2px;">Wetness: ${marker.wetness}%</div>
+                <div style="font-size: 12px; color: #666; font-style: italic;">${marker.status}</div>
+                <div style="font-size: 11px; color: #4CAF50; font-weight: 500; margin-top: 2px;">${marker.risk}</div>
+            </div>
+        `);
     });
 }
 
-// Generate wetness report
-function generateWetnessReport() {
-    showNotification('Generating leaf wetness report...', 'info');
+// Color coding for wetness levels (Low wetness = good)
+function getWetnessColor(wetness) {
+    if (wetness >= 80) return '#F44336';        // Very High - Red (Disease Risk)
+    if (wetness >= 60) return '#FF9800';        // High - Orange (Moderate Risk)
+    if (wetness >= 40) return '#FFC107';        // Moderate - Amber (Some Risk)  
+    if (wetness >= 20) return '#4CAF50';        // Low - Green (Good)
+    return '#2E7D32';                           // Very Low - Dark Green (Excellent)
+}
+
+// Search functionality
+function searchLocation() {
+    const searchTerm = document.getElementById('locationSearch').value.trim();
     
-    setTimeout(() => {
-        const reportData = {
-            timestamp: new Date().toISOString(),
-            currentWetness: WETNESS_DATA.current.wetness,
-            average24h: WETNESS_DATA.current.average24h,
-            diseaseRisk: WETNESS_DATA.current.diseaseRisk,
-            recommendations: [
-                'Continue monitoring during high humidity periods',
-                'Improve air circulation around plants',
-                'Consider fungicide application if risk increases'
-            ]
-        };
-        
-        console.log('Generated Wetness Report:', reportData);
-        showNotification('Leaf wetness report generated successfully!', 'success');
-    }, 2000);
+    if (!searchTerm) {
+        showNotification('Please enter a location to search', 'error');
+        return;
+    }
+    
+    const searchBtn = document.querySelector('.map-search-button');
+    const originalText = searchBtn.textContent;
+    searchBtn.textContent = 'Searching...';
+    searchBtn.disabled = true;
+    
+    // Geocoding with Nominatim API
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchTerm)}&limit=1`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const result = data[0];
+                const lat = parseFloat(result.lat);
+                const lng = parseFloat(result.lon);
+                
+                leafWetnessMap.setView([lat, lng], 12);
+                
+                const searchMarker = L.marker([lat, lng]).addTo(leafWetnessMap);
+                searchMarker.bindPopup(`
+                    <div style="text-align: center; min-width: 150px;">
+                        <strong>📍 Search Result</strong><br>
+                        <small>${result.display_name.substring(0, 60)}...</small>
+                    </div>
+                `).openPopup();
+                
+                setTimeout(() => {
+                    leafWetnessMap.removeLayer(searchMarker);
+                }, 10000);
+                
+                showNotification('✅ Location found successfully!', 'success');
+            } else {
+                showNotification('Location not found. Please try a different search term.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+            showNotification('Search failed. Please check your connection.', 'error');
+        })
+        .finally(() => {
+            searchBtn.textContent = originalText;
+            searchBtn.disabled = false;
+        });
 }
 
-// Navigate back to options
-function navigateBack() {
-    showNotification('Returning to options...', 'info');
-    setTimeout(() => {
-        window.location.href = '../Options/options.html';
-    }, 500);
-}
-
-// View wetness chart
-function viewWetnessChart() {
-    showNotification('Opening detailed wetness chart...', 'info');
-    console.log('📊 Viewing wetness pattern chart');
-}
-
-// Show notification
+// Enhanced notification system
 function showNotification(message, type = 'info') {
+    const existingNotifications = document.querySelectorAll('.field-notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
     const notification = document.createElement('div');
-    notification.innerHTML = `
-        <span>${message}</span>
-        <button onclick="this.parentElement.remove()" class="notification-close">&times;</button>
-    `;
+    notification.className = `field-notification ${type}`;
+    notification.textContent = message;
     
-    const colors = {
-        info: { bg: '#2196F3', color: '#FFFFFF' },
-        success: { bg: '#4CAF50', color: '#FFFFFF' },
-        error: { bg: '#F44336', color: '#FFFFFF' }
-    };
-    
-    const style = colors[type] || colors.info;
+    const bgColor = type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#3B82F6';
     
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
+        top: 100px;
         right: 20px;
-        background: ${style.bg};
-        color: ${style.color};
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-weight: 600;
+        background: ${bgColor};
+        color: #FFFFFF;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 500;
         font-size: 14px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        z-index: 1000;
-        animation: slideIn 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        max-width: 350px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 9999;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
     `;
-    
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.style.cssText = `
-        background: none;
-        border: none;
-        color: inherit;
-        font-size: 18px;
-        cursor: pointer;
-        padding: 0;
-        line-height: 1;
-    `;
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
-        if (notification.parentElement) {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 300);
     }, 4000);
 }
 
-// Start real-time updates
-function startRealTimeUpdates() {
-    setInterval(() => {
-        // Simulate wetness fluctuations
-        const variation = (Math.random() - 0.5) * 4; // ±2% variation
-        const newWetness = Math.max(0, Math.min(100, WETNESS_DATA.current.wetness + variation));
-        
-        WETNESS_DATA.current.wetness = Math.round(newWetness);
-        
-        // Update disease risk based on wetness level
-        if (WETNESS_DATA.current.wetness < 25) {
-            WETNESS_DATA.current.diseaseRisk = "LOW";
-        } else if (WETNESS_DATA.current.wetness < 40) {
-            WETNESS_DATA.current.diseaseRisk = "MEDIUM";
-        } else {
-            WETNESS_DATA.current.diseaseRisk = "HIGH";
-        }
-        
-        updateMetrics();
-        
-    }, 25000); // Update every 25 seconds
-}
-
-// Add interactivity
+// Add interactive effects
 function addInteractivity() {
-    // Add hover effects to metric cards
+    // Metric cards hover effects
     const metricCards = document.querySelectorAll('.metric-card');
     metricCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px) scale(1.02)';
+            card.style.transform = 'translateY(-5px) scale(1.02)';
         });
         
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'translateY(0) scale(1)';
         });
     });
-    
-    // Add click events to chart containers
-    const chartContainer = document.querySelector('.chart-container');
-    if (chartContainer) {
-        chartContainer.addEventListener('click', viewWetnessChart);
-    }
+
+    // Chart cards interactions
+    const chartCards = document.querySelectorAll('.chart-card');
+    chartCards.forEach(card => {
+        card.addEventListener('click', () => {
+            if (!card.classList.contains('map-container')) {
+                showNotification('📊 Wetness analytics feature coming soon!', 'info');
+            }
+        });
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // ESC key to go back
+        if (e.key === 'Escape') {
+            window.location.href = '../Options/options.html';
+        }
+        
+        // U key for upload
+        if (e.key === 'u' || e.key === 'U') {
+            handleUpload();
+        }
+        
+        // W key for wetness info
+        if (e.key === 'w' || e.key === 'W') {
+            showNotification('🍃 Monitoring leaf wetness for disease prevention...', 'info');
+        }
+    });
 }
 
-// Add animation styles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🍃 Leaf Wetness Analytics loaded!');
     
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
-    }
+    setTimeout(() => {
+        if (document.getElementById('leafWetnessMap')) {
+            initializeLeafWetnessMap();
+            console.log('✅ Leaf Wetness Map initialized successfully!');
+        }
+    }, 500);
     
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-    }
-`;
-document.head.appendChild(style);
-
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        navigateBack();
-    }
-    if (e.key === 'r' || e.key === 'R') {
-        generateWetnessReport();
+    // Add interactivity
+    addInteractivity();
+    
+    // Add enter key support for search
+    const searchInput = document.getElementById('locationSearch');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchLocation();
+            }
+        });
     }
 });
 
 // Error handling
 window.addEventListener('error', (event) => {
-    console.error('Leaf Wetness Dashboard error:', event.error);
-    showNotification('An error occurred. Please refresh the page.', 'error');
+    console.error('Leaf Wetness page error:', event.error);
+    showNotification('An error occurred. Please try again.', 'error');
 });
 
-// Export for global access
-window.LeafWetnessAnalytics = {
-    generateWetnessReport,
-    navigateBack,
-    viewWetnessChart,
-    showNotification
-};
-
-console.log('🍃 Leaf Wetness Analytics system ready!');
+// Performance monitoring
+window.addEventListener('load', () => {
+    const loadTime = performance.now();
+    console.log(`🍃 Leaf Wetness analytics loaded in ${loadTime.toFixed(2)}ms`);
+});

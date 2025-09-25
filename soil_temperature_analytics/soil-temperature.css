@@ -1,26 +1,38 @@
-/* Reset and Base */
+/* RESET AND BASE */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body - Background shifted down with specific positioning */
-body {
+html, body {
+    height: 100%;
     font-family: 'Nunito', sans-serif;
-    background-image: url('../shared/images/backgrounds/bg-soilTemp.jpeg');
-    background-size: cover;
-    background-position: center 40%;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    width: 100%;
     overflow-x: hidden;
 }
 
+/* MAIN DASHBOARD */
+body {
+    background-image: url('../shared/images/backgrounds/bg-soilTemp.jpeg');
+    background-size: cover; /* FILLS ENTIRE VIEWPORT */
+    background-position: center center; /* CENTERS THE IMPORTANT PARTS */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    /* FALLBACK COLOR IF IMAGE DOESN'T LOAD */
+    background-color: #E8F5E8;
+}
 
-/* Header - UPDATED with blur background */
-/* Header - EXACTLY like options.css */
+/* ENSURE NO GAPS OR MARGINS */
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header - FIXED Z-INDEX ISSUE */
 .header {
     background: rgba(255,255,255,0.08);
     backdrop-filter: blur(40px);
@@ -35,7 +47,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 .logo-section {
@@ -55,7 +67,6 @@ body {
     color: #000000;
     font-weight: 800;
     font-size: 20px;
-    white-space: nowrap;
 }
 
 .user-section {
@@ -70,17 +81,14 @@ body {
     object-fit: cover;
     border: 2px solid rgba(255,255,255,0.3);
     cursor: pointer;
-    transition: border-color 0.3s ease;
 }
 
-.avatar:hover {
-    border-color: rgba(255,255,255,0.6);
+.brand-link {
+    text-decoration: none;
+    color: inherit;
 }
 
-/* Adjust main title margin for fixed header */
-/* Main Title - Enhanced readability */
-/* Main Title - Professional readability enhancement */
-/* Main Title - Maximum visibility */
+/* Main Title */
 .main-title {
     text-align: center;
     margin-top: 140px;
@@ -88,215 +96,182 @@ body {
 }
 
 .main-title h1 {
-    font-size: 48px;
     font-weight: 900;
-    color: #FFFFFF;
-    margin-bottom: 15px;
-    text-shadow: 3px 3px 0px #000000,
-                 6px 6px 12px rgba(0,0,0,0.8),
-                 0px 0px 20px rgba(0,0,0,0.5);
-    -webkit-text-stroke: 1px #000000;
-}
-
-.main-title p {
-    font-size: 22px;
-    color: #FFFFFF;
-    font-weight: 800;
-    text-shadow: 2px 2px 0px #000000,
-                 4px 4px 8px rgba(0,0,0,0.9),
-                 0px 0px 16px rgba(0,0,0,0.6);
-    -webkit-text-stroke: 0.5px #000000;
-    letter-spacing: 0.8px;
-    line-height: 1.5;
-}
-
-
-
-/* Responsive header styles - EXACTLY from options.css */
-@media (max-width: 1199px) and (min-width: 1024px) {
-    .header {
-        padding: 0 30px;
-    }
-    
-    .brand {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 1023px) {
-    .header {
-        height: 70px;
-        padding: 0 25px;
-    }
-    
-    .logo {
-        width: 45px;
-        height: 40px;
-    }
-    
-    .brand {
-        font-size: 16px;
-    }
-    
-    .avatar {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .main-title {
-        margin-top: 110px;
-    }
-}
-
-@media (max-width: 767px) {
-    .header {
-        height: 60px;
-        padding: 0 20px;
-    }
-    
-    .logo {
-        width: 40px;
-        height: 35px;
-    }
-    
-    .brand {
-        font-size: 14px;
-    }
-    
-    .avatar {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .main-title {
-        margin-top: 100px;
-    }
-}
-
-/* Main Title - Adjusted for fixed header */
-.main-title {
-    text-align: center;
-    margin-top: 150px;
-    margin-bottom: 30px;
-}
-
-.main-title h1 {
     font-size: 48px;
-    font-weight: 700;
     color: #000000;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+    margin-bottom: 15px;
 }
 
 .main-title p {
+    font-weight: 600;
     font-size: 18px;
-    color: #333333;
-    font-weight: 400;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    padding: 15px 30px;
+    border-radius: 30px;
+    display: inline-block;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* Upload Button */
+/* Soil Temperature Badge */
+.temperature-badge {
+    position: absolute;
+    top: 120px;
+    right: 40px;
+    z-index: 100;
+}
+
+.badge-content {
+    background: #FF9800;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(255,152,0,0.3);
+    letter-spacing: 1px;
+}
+
+/* Upload Container */
 .upload-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
+    text-align: center;
+    margin: 40px 0;
 }
 
 .upload-btn {
     background: #2CFF05;
     color: #000000;
     border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-size: 16px;
+    padding: 15px 30px;
+    border-radius: 15px;
     font-weight: 700;
+    font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(44,255,5,0.3);
     transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(44,255,5,0.3);
 }
 
 .upload-btn:hover {
     background: #30FF14;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(44,255,5,0.4);
+    transform: translateY(-3px);
 }
 
-/* Metrics Cards */
+/* Metrics Container - EXACT MATCH TO YOUR IMAGE */
 .metrics-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto 40px auto;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    max-width: 900px;
+    margin: 0 auto 50px auto;
     padding: 0 20px;
+    flex-wrap: nowrap;
 }
 
 .metric-card {
-    background: white;
-    border-radius: 15px;
-    padding: 25px 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 16px 18px;
+    text-align: left;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     transition: transform 0.3s ease;
     cursor: pointer;
-    text-align: left;
+    flex: 1;
+    min-width: 160px;
+    max-width: 200px;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
 }
 
 .metric-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
 }
 
-.metric-card.recommendation {
-    min-height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+/* EXACT card colors from your screenshot */
+.metric-card.soil-temperature-red {
+    background: #FFFFFF;
+    color: #000000;
+    border-left: 4px solid #FF5722;
+}
+
+.metric-card.mean-white {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.metric-card.std-white {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.metric-card.recommendation-red {
+    background: #FFFFFF;
+    color: #000000;
+    position: relative;
+    border-left: 4px solid #FF5722;
 }
 
 .metric-title {
-    font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
+    font-size: 12px;
     color: #000000;
-    margin-bottom: 15px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .metric-value {
-    font-size: 32px;
-    font-weight: 800;
-    color: #333333;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 0;
+    color: #000000;
 }
 
-.metric-value.temperature-low {
-    color: #EF4444;
-    font-weight: 900;
+/* EXACT colors for each value */
+.metric-card.soil-temperature-red .metric-value.low {
+    color: #FF5722;
+    font-weight: 800;
 }
 
-.recommendation-text {
-    color: #EF4444;
-    font-size: 16px;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 15px;
+.metric-card.mean-white .metric-value {
+    color: #000000;
+}
+
+.metric-card.std-white .metric-value {
+    color: #000000;
+}
+
+.metric-subtitle {
+    font-weight: 600;
+    font-size: 11px;
+    color: #FF5722;
+    margin-bottom: 6px;
     line-height: 1.2;
+    text-transform: capitalize;
 }
 
 .action-btn {
-    background: #EF4444;
-    color: white;
+    background: #FF5722;
+    color: #FFFFFF;
     border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 11px;
     cursor: pointer;
     transition: all 0.3s ease;
-    align-self: center;
-    min-width: 100px;
+    width: fit-content;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
 }
 
 .action-btn:hover {
-    background: #DC2626;
+    background: #FF7043;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 /* Charts Container */
@@ -310,39 +285,138 @@ body {
 }
 
 .chart-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    overflow: hidden;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     transition: transform 0.3s ease;
-    cursor: pointer;
-    min-height: 350px;
+    overflow: hidden;
+    min-height: 400px;
+    position: relative;
+    z-index: 1;
 }
 
 .chart-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
 }
 
 .chart-title {
-    font-size: 20px;
     font-weight: 700;
+    font-size: 20px;
     color: #000000;
-    padding: 25px 25px 0 25px;
+    padding: 25px 25px 0;
+    margin-bottom: 20px;
 }
 
 .chart-content {
+    padding: 0 25px 25px;
     height: 300px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #F8F9FA;
 }
 
 .chart-content img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ===== MAP WITH SEARCH BAR STYLES - FIXED Z-INDEX ===== */
+.map-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+.map-header {
+    padding: 20px 25px 15px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E5E5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.map-header .chart-title {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Professional Search Bar */
+.map-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+.map-search-input {
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 200px;
+    color: #374151;
+    background: transparent;
+}
+
+.map-search-input::placeholder {
+    color: #9CA3AF;
+}
+
+.map-search-button {
+    padding: 10px 20px;
+    border: none;
+    background: #10B981;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.map-search-button:hover {
+    background: #059669;
+}
+
+.map-search-button:active {
+    background: #047857;
+}
+
+/* MAP CONTAINER - FIXED Z-INDEX ISSUE */
+.field-map {
+    flex: 1;
+    min-height: 320px;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* LEAFLET SPECIFIC Z-INDEX FIXES */
+.field-map .leaflet-control-container {
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+    z-index: 100;
+}
+
+.field-map .leaflet-popup-pane {
+    z-index: 200;
+}
+
+.field-map .leaflet-map-pane {
+    z-index: 1;
 }
 
 /* Plots Container */
@@ -356,39 +430,36 @@ body {
 }
 
 .plot-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    overflow: hidden;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     transition: transform 0.3s ease;
-    cursor: pointer;
-    min-height: 300px;
+    overflow: hidden;
+    min-height: 350px;
 }
 
 .plot-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
 }
 
 .plot-title {
-    font-size: 20px;
     font-weight: 700;
+    font-size: 20px;
     color: #000000;
-    padding: 25px 25px 0 25px;
+    padding: 25px 25px 0;
+    margin-bottom: 20px;
 }
 
 .plot-content {
+    padding: 0 25px 25px;
     height: 250px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #F8F9FA;
 }
 
 .plot-content img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 /* Back Link */
@@ -413,249 +484,71 @@ body {
     transform: translateX(-5px);
 }
 
-/* Notification System */
-.notification {
-    position: fixed;
-    top: 100px;
-    right: 30px;
-    padding: 15px 20px;
-    border-radius: 10px;
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    z-index: 2000;
-    transform: translateX(400px);
-    transition: all 0.4s ease;
-}
-
-.notification.show {
-    transform: translateX(0);
-}
-
-.notification.success {
-    background: rgba(34, 197, 94, 0.95);
-    backdrop-filter: blur(10px);
-}
-
-.notification.info {
-    background: rgba(59, 130, 246, 0.95);
-    backdrop-filter: blur(10px);
-}
-
-/* Responsive Design */
-@media (min-width: 1200px) {
-    .metrics-container {
-        grid-template-columns: repeat(4, 1fr);
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .temperature-badge {
+        top: 100px;
+        right: 20px;
     }
     
-    .charts-container,
-    .plots-container {
-        grid-template-columns: repeat(2, 1fr);
+    .badge-content {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    
+    .metrics-container {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .metric-card {
+        min-width: 140px;
+        max-width: 160px;
+        height: 70px;
+        padding: 14px 16px;
+    }
+
+    .map-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .map-header .chart-title {
+        text-align: center;
+    }
+    
+    .map-search-bar {
+        justify-content: center;
+    }
+    
+    .map-search-input {
+        width: 160px;
+    }
+    
+    .field-map {
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .metric-card {
+        min-width: 280px;
+        max-width: 320px;
+        height: 65px;
     }
 }
 
 @media (max-width: 1024px) {
-    .header {
-        padding: 15px 30px;
-    }
-    
-    .main-title {
-        margin-top: 130px;
-    }
-    
-    .main-title h1 {
-        font-size: 40px;
-    }
-    
-    .metrics-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
     .charts-container,
     .plots-container {
         grid-template-columns: 1fr;
         gap: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        padding: 12px 20px;
-    }
-    
-    .logo-icon {
-        width: 40px;
-        height: 35px;
-        padding: 3px;
-    }
-    
-    .logo-text {
-        font-size: 18px;
-        padding: 4px 10px;
-    }
-    
-    .main-title {
-        margin-top: 110px;
-    }
-    
-    .main-title h1 {
-        font-size: 32px;
-    }
-    
-    .main-title p {
-        font-size: 16px;
-    }
-    
-    .upload-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-    
-    .metrics-container {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 0 15px;
-    }
-    
-    .charts-container,
-    .plots-container {
-        gap: 15px;
-        padding: 0 15px;
-    }
-    
-    .chart-card,
-    .plot-card {
-        min-height: 280px;
-    }
-    
-    .chart-content,
-    .plot-content {
-        height: 200px;
-    }
-    
-    .back-link {
-        bottom: 20px;
-        left: 20px;
-        padding: 10px 15px;
-        font-size: 12px;
-    }
-    
-    .notification {
-        top: 90px;
-        right: 15px;
-        padding: 12px 15px;
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        padding: 10px 15px;
-    }
-    
-    .logo-icon {
-        width: 35px;
-        height: 30px;
-    }
-    
-    .logo-text {
-        font-size: 16px;
-        padding: 3px 8px;
-    }
-    
-    .chart-card,
-    .plot-card {
-        min-height: 220px;
-    }
-    
-    .chart-content,
-    .plot-content {
-        height: 160px;
-    }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    .metric-card,
-    .chart-card,
-    .plot-card,
-    .upload-btn,
-    .action-btn,
-    .back-link,
-    .header {
-        transition: none;
-    }
-}
-
-/* Loading Animation */
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.loading {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-/* All your existing CSS code stays the same... */
-
-/* Brand link styling - ADD THIS AT THE END */
-.brand-link {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.brand-link:hover {
-    transform: scale(1.05);
-    opacity: 0.8;
-}
-
-.brand-link:hover .brand {
-    text-shadow: 2px 2px 8px rgba(44, 255, 5, 0.4);
-}
-
-/* Update existing .brand class to this: */
-.brand {
-    color: #000000;
-    font-weight: 800;
-    font-size: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-    transition: all 0.3s ease;
-}
-
-/* Responsive brand link styles - ADD AT THE END */
-@media (max-width: 1199px) and (min-width: 1024px) {
-    .brand {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 1023px) {
-    .brand {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 767px) {
-    .brand {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .brand {
-        font-size: 12px;
-        max-width: 150px;
     }
 }

@@ -1,202 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaf Wetness Analytics - AgriSense AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <title>AgriSense AI - Leaf Wetness Analytics</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="leaf-wetness.css">
 </head>
-
 <body>
-    <div class="dashboard-container">
-        <!-- Header Section -->
-        <!-- Header with Logo and User Avatar -->
-        <header class="header">
-            <div class="logo-section">
-                <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
-                <!-- REPLACE WITH THIS -->
-<a href="../Landing_Page/landing.html" class="brand-link">
-    <span class="brand">AgriSense AI</span>
-</a>
-
-            </div>
-
-            <div class="user-section">
-                <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
-            </div>
-        </header>
-
-
-        <!-- Navigation Semi-Circle - Top Right -->
-        <!-- <div class="nav-semicircle" onclick="navigateBack()">
-            <img src="../shared/images/icons/top_right_semicircle.jpeg" alt="Navigation Icon" class="nav-icon">
-            <div class="nav-text">LEAF<br>WETNESS</div>
-        </div> -->
-
-        <!-- Main Title Section -->
-        <div class="main-title">
-            <h1 class="dashboard-title">Leaf Wetness Analytics</h1>
-            <p class="dashboard-subtitle">Monitor leaf surface moisture and prevent fungal diseases for healthier crops
-            </p>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
+            <a href="../Landing_Page/lnding.html" class="brand-link">
+                <span class="brand">AgriSense AI</span>
+            </a>
         </div>
-
-        <!-- Action Bar -->
-        <div class="action-bar">
-            <button class="action-btn primary" onclick="generateWetnessReport()">
-                Generate Wetness Report →
-            </button>
+        
+        <div class="user-section">
+            <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
         </div>
+    </header>
 
-        <!-- Metrics Row -->
-        <div class="metrics-row">
-            <div class="metric-card current">
-                <div class="metric-label">Current Wetness</div>
-                <div class="metric-value status-current" id="current-wetness">18%</div>
-            </div>
-            <div class="metric-card average">
-                <div class="metric-label">24h Average</div>
-                <div class="metric-value status-average" id="avg-wetness">22%</div>
-            </div>
-            <div class="metric-card range">
-                <div class="metric-label">Today's Range</div>
-                <div class="metric-value status-range" id="wetness-range">15-28%</div>
-            </div>
-            <div class="metric-card status">
-                <div class="metric-label">Disease Risk</div>
-                <div class="metric-value status-low" id="disease-risk">LOW</div>
-            </div>
-        </div>
-
-        <!-- Analytics Row -->
-        <div class="analytics-row">
-            <div class="chart-container" onclick="viewWetnessChart()">
-                <h3 class="chart-title">24-Hour Wetness Pattern</h3>
-                <div class="chart-placeholder">
-                    <img src="../shared/images/backgrounds/bg-leaf.png" alt="Wetness Pattern Chart"
-                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
-                </div>
-            </div>
-            <div class="data-container">
-                <h3 class="data-title">Wetness Readings</h3>
-                <div class="readings-table">
-                    <div class="table-header">
-                        <span>Time</span>
-                        <span>Wetness</span>
-                        <span>Risk Level</span>
-                    </div>
-                    <div class="table-body" id="readings-data">
-                        <div class="table-row">
-                            <span>14:30</span>
-                            <span>18%</span>
-                            <span class="status-low">Low</span>
-                        </div>
-                        <div class="table-row">
-                            <span>14:00</span>
-                            <span>22%</span>
-                            <span class="status-low">Low</span>
-                        </div>
-                        <div class="table-row">
-                            <span>13:30</span>
-                            <span>25%</span>
-                            <span class="status-medium">Medium</span>
-                        </div>
-                        <div class="table-row">
-                            <span>13:00</span>
-                            <span>28%</span>
-                            <span class="status-medium">Medium</span>
-                        </div>
-                        <div class="table-row">
-                            <span>12:30</span>
-                            <span>32%</span>
-                            <span class="status-high">High</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Insights Row -->
-        <div class="insights-row">
-            <div class="insights-container">
-                <h3 class="insights-title">Disease Prevention</h3>
-                <div class="insights-content">
-                    <div class="insight-item">
-                        <span class="insight-icon">🍃</span>
-                        <div class="insight-text">
-                            <h4>Current Status</h4>
-                            <p>Leaf wetness levels are within safe range. Low risk of fungal infections.</p>
-                        </div>
-                    </div>
-                    <div class="insight-item">
-                        <span class="insight-icon">⚠️</span>
-                        <div class="insight-text">
-                            <h4>Prevention Alert</h4>
-                            <p>Monitor closely during morning dew hours (5-8 AM) for elevated risks.</p>
-                        </div>
-                    </div>
-                    <div class="insight-item">
-                        <span class="insight-icon">📊</span>
-                        <div class="insight-text">
-                            <h4>Weekly Trend</h4>
-                            <p>Wetness duration decreased by 12% - excellent air circulation improvement.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="alerts-container">
-                <h3 class="alerts-title">Monitoring Alerts</h3>
-                <div class="alerts-content">
-                    <div class="alert-item success">
-                        <span class="alert-dot"></span>
-                        <span class="alert-text">All leaf wetness sensors active</span>
-                    </div>
-                    <div class="alert-item info">
-                        <span class="alert-dot"></span>
-                        <span class="alert-text">Disease risk assessment updated</span>
-                    </div>
-                    <div class="alert-item warning">
-                        <span class="alert-dot"></span>
-                        <span class="alert-text">High humidity expected tomorrow</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Weather Impact Section -->
-        <div class="weather-impact">
-            <div class="weather-container">
-                <h3 class="weather-title">Weather Impact</h3>
-                <div class="weather-content">
-                    <div class="weather-item">
-                        <div class="weather-metric">
-                            <span class="weather-label">Humidity</span>
-                            <span class="weather-value" id="humidity">65%</span>
-                        </div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-metric">
-                            <span class="weather-label">Dew Point</span>
-                            <span class="weather-value" id="dew-point">12°C</span>
-                        </div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-metric">
-                            <span class="weather-label">Wind Speed</span>
-                            <span class="weather-value" id="wind-speed">8 km/h</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Back Navigation -->
-        <a href="../Options/options.html" class="back-link">← Back to Options</a>
+    <!-- Main Title -->
+    <div class="main-title">
+        <h1>Analytics Dashboard</h1>
+        <p>Monitor your farm's performance with real time data and insights</p>
     </div>
 
+    <!-- Leaf Wetness Badge
+    <div class="wetness-badge">
+        <div class="badge-content">
+            <span class="badge-text">LEAF WETNESS</span>
+        </div>
+    </div> -->
+
+    <!-- Upload Files Button -->
+    <div class="upload-container">
+        <button class="upload-btn" onclick="handleUpload()">🗂️ Upload Files</button>
+    </div>
+
+    <!-- Metrics Cards - EXACT MATCH TO YOUR IMAGE -->
+    <div class="metrics-container">
+        <div class="metric-card leaf-wetness-red">
+            <div class="metric-title">Leaf Wetness</div>
+            <div class="metric-value low">Low</div>
+        </div>
+
+        <div class="metric-card mean-white">
+            <div class="metric-title">Mean</div>
+            <div class="metric-value">0.753</div>
+        </div>
+
+        <div class="metric-card std-white">
+            <div class="metric-title">Standard Deviation</div>
+            <div class="metric-value">0.173</div>
+        </div>
+
+        <div class="metric-card recommendation-red">
+            <div class="metric-title">Recommendation</div>
+            <div class="metric-subtitle">Urgent Action Required</div>
+            <button class="action-btn">Take Action</button>
+        </div>
+    </div>
+
+    <!-- Charts Section - MAP WITH SEARCH BAR -->
+    <div class="charts-container">
+        <!-- Zone Distribution Map with Search Bar -->
+        <div class="chart-card map-container">
+            <div class="map-header">
+                <div class="chart-title">Zone Distribution</div>
+                <div class="map-search-bar">
+                    <input type="text" id="locationSearch" placeholder="Search location..." class="map-search-input">
+                    <button onclick="searchLocation()" class="map-search-button">Search</button>
+                </div>
+            </div>
+            <div id="leafWetnessMap" class="field-map"></div>
+        </div>
+
+        <!-- Heat Map - UNCHANGED -->
+        <div class="chart-card">
+            <div class="chart-title">Heat Map</div>
+            <div class="chart-content">
+                <img src="../shared/images/charts/heat-map.png" alt="Heat Map Chart">
+            </div>
+        </div>
+    </div>
+
+    <!-- Plots Section - BOTH UNCHANGED -->
+    <div class="plots-container">
+        <div class="plot-card">
+            <div class="plot-title">Plot 1</div>
+            <div class="plot-content">
+                <img src="../shared/images/plots/plot-1.png" alt="Plot 1 Analysis">
+            </div>
+        </div>
+
+        <div class="plot-card">
+            <div class="plot-title">Plot 2</div>
+            <div class="plot-content">
+                <img src="../shared/images/plots/plot-2.png" alt="Plot 2 Analysis">
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Link -->
+    <a href="../Options/options.html" class="back-link">← Back to Dashboard</a>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- JavaScript -->
     <script src="leaf-wetness.js"></script>
 </body>
-
 </html>

@@ -1,290 +1,247 @@
-// AgriSense AI Dashboard JavaScript
-/**
- * AgriSense AI - Soil Temperature Analytics
- * Simple functionality matching Figma design
- */
+let reportsMap;
 
-// ADD THIS NAVIGATION CODE AT THE BEGINNING
-// Navigation to landing page
-function navigateToLanding() {
-    // Add transition effect
-    document.body.style.transition = 'opacity 0.3s ease';
-    document.body.style.opacity = '0.8';
-    
-    // Navigate after animation
-    setTimeout(() => {
-        window.location.href = '../Landing_Page/landing.html';
-    }, 300);
-}
-
-// Enhanced header interactions
-function initHeaderInteractions() {
-    const brandLink = document.querySelector('.brand-link');
-    const logo = document.querySelector('.logo');
-    
-    if (brandLink) {
-        brandLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateToLanding();
-        });
-    }
-    
-    // Make logo also clickable
-    if (logo) {
-        logo.style.cursor = 'pointer';
-        logo.addEventListener('click', navigateToLanding);
-    }
-}
-
-// THEN UPDATE YOUR EXISTING DOMContentLoaded EVENT:
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🌡️ Soil Temperature Analytics loaded!');
-    initHeaderInteractions(); // ADD THIS LINE
-    addInteractivity(); // Your existing function
-});
-
-// Rest of your existing JavaScript code stays the same...
-
-// Full Report Generation
-function generateFullReport() {
-    console.log('Generating comprehensive agricultural report...');
-    
-    // Show loading state
-    const reportBtn = document.querySelector('.full-report-btn');
-    const originalText = reportBtn.querySelector('.report-text').innerHTML;
-    
-    reportBtn.querySelector('.report-text').innerHTML = 'LOADING...';
-    reportBtn.style.pointerEvents = 'none';
-    reportBtn.style.opacity = '0.7';
-    
-    // Simulate report generation
-    setTimeout(() => {
-        alert('Full Agricultural Report Generated Successfully!\n\nReport includes:\n- Detailed crop health analysis\n- Soil condition assessment\n- Weather impact analysis\n- Pest and disease detection\n- Yield predictions\n- Recommendations');
-        
-        // Reset button
-        reportBtn.querySelector('.report-text').innerHTML = originalText;
-        reportBtn.style.pointerEvents = 'auto';
-        reportBtn.style.opacity = '1';
-    }, 2000);
-}
-
-// File Upload Handler
+// Handle file upload
 function handleUpload() {
-    console.log('Initiating file upload...');
-    
-    // Create hidden file input
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
+    fileInput.accept = '.csv,.xlsx,.json,.pdf';
     fileInput.multiple = true;
-    fileInput.accept = '.jpg,.jpeg,.png,.pdf,.csv,.xlsx,.json';
-    fileInput.style.display = 'none';
     
-    // Handle file selection
-    fileInput.addEventListener('change', function(e) {
-        const files = Array.from(e.target.files);
-        
+    fileInput.onchange = function(event) {
+        const files = event.target.files;
         if (files.length > 0) {
-            console.log('Files selected:', files.map(f => f.name));
-            
-            // Show upload progress
-            showUploadProgress(files);
-            
-            // Simulate file processing
-            setTimeout(() => {
-                processUploadedFiles(files);
-            }, 2000);
+            showNotification(`✅ Successfully uploaded ${files.length} file(s) for comprehensive analysis!`, 'success');
         }
-    });
+    };
     
-    // Trigger file picker
-    document.body.appendChild(fileInput);
     fileInput.click();
-    document.body.removeChild(fileInput);
 }
 
-// Show upload progress
-function showUploadProgress(files) {
-    const uploadBtn = document.querySelector('.upload-btn');
-    const originalContent = uploadBtn.innerHTML;
+// Initialize map with search functionality
+function initializeReportsMap() {
+    const defaultLat = 23.2599;
+    const defaultLng = 77.4126;
     
-    uploadBtn.innerHTML = '<span class="upload-icon">⏳</span>Uploading...';
-    uploadBtn.style.pointerEvents = 'none';
-    uploadBtn.style.background = '#FFA726';
+    reportsMap = L.map('reportsMap').setView([defaultLat, defaultLng], 9);
     
-    // Reset after processing
-    setTimeout(() => {
-        uploadBtn.innerHTML = originalContent;
-        uploadBtn.style.pointerEvents = 'auto';
-        uploadBtn.style.background = '#2CFF05';
-    }, 2500);
-}
-
-// Process uploaded files
-function processUploadedFiles(files) {
-    const fileTypes = {
-        images: files.filter(f => f.type.startsWith('image/')),
-        documents: files.filter(f => f.type === 'application/pdf'),
-        data: files.filter(f => f.name.endsWith('.csv') || f.name.endsWith('.xlsx') || f.name.endsWith('.json'))
-    };
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(reportsMap);
     
-    let message = `Successfully processed ${files.length} file(s):\n\n`;
+    // Add comprehensive report markers
+    const reportMarkers = [
+        { lat: 23.2580, lng: 77.4100, health: 92, zone: 'A1', status: 'Excellent', type: 'Overall Health' },
+        { lat: 23.2620, lng: 77.4150, health: 75, zone: 'A2', status: 'Moderate', type: 'Soil Temperature' },
+        { lat: 23.2560, lng: 77.4080, health: 45, zone: 'B1', status: 'Low', type: 'Soil Moisture' },
+        { lat: 23.2640, lng: 77.4170, health: 88, zone: 'B2', status: 'Excellent', type: 'Leaf Wetness' },
+        { lat: 23.2600, lng: 77.4110, health: 82, zone: 'C1', status: 'Good', type: 'Nutrient Level' }
+    ];
     
-    if (fileTypes.images.length > 0) {
-        message += `📸 Images: ${fileTypes.images.length} (Crop/soil analysis ready)\n`;
-    }
-    if (fileTypes.documents.length > 0) {
-        message += `📄 Documents: ${fileTypes.documents.length} (Text extraction complete)\n`;
-    }
-    if (fileTypes.data.length > 0) {
-        message += `📊 Data files: ${fileTypes.data.length} (Data parsing complete)\n`;
-    }
-    
-    message += '\nFiles are now available for analysis in your dashboard.';
-    alert(message);
-    
-    // Update metrics (simulate)
-    updateDashboardMetrics();
-}
-
-// Update dashboard metrics after file upload
-function updateDashboardMetrics() {
-    const metrics = document.querySelectorAll('.metric-value');
-    
-    // Simulate metric updates with small animations
-    metrics.forEach((metric, index) => {
-        metric.style.transform = 'scale(1.1)';
-        metric.style.color = '#4CAF50';
+    reportMarkers.forEach(marker => {
+        const color = getReportColor(marker.health);
         
-        setTimeout(() => {
-            metric.style.transform = 'scale(1)';
-            metric.style.color = '';
-        }, 500);
+        L.circleMarker([marker.lat, marker.lng], {
+            radius: 10,
+            fillColor: color,
+            color: '#FFFFFF',
+            weight: 2,
+            fillOpacity: 0.9,
+            opacity: 1
+        })
+        .addTo(reportsMap)
+        .bindPopup(`
+            <div style="text-align: center; min-width: 140px;">
+                <div style="font-weight: 700; margin-bottom: 4px;">Zone ${marker.zone}</div>
+                <div style="font-weight: 600; margin-bottom: 2px;">${marker.type}: ${marker.health}%</div>
+                <div style="font-size: 12px; color: #666; font-style: italic;">${marker.status}</div>
+            </div>
+        `);
     });
 }
 
-// Chart viewing functionality
-function viewChart(chartType) {
-    console.log(`Opening ${chartType} chart...`);
-    
-    const chartData = {
-        zone: {
-            title: 'Zone Distribution Analysis',
-            description: 'Detailed breakdown of agricultural zones with health indicators'
-        },
-        heatmap: {
-            title: 'Temperature & Moisture Heat Map',
-            description: 'Real-time visualization of field conditions'
-        }
-    };
-    
-    const chart = chartData[chartType];
-    if (chart) {
-        alert(`Opening: ${chart.title}\n\n${chart.description}\n\nThis will open in a new detailed view window.`);
-        
-        // Simulate chart opening animation
-        const chartContainer = event.currentTarget;
-        chartContainer.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            chartContainer.style.transform = 'scale(1)';
-        }, 200);
-    }
+// Color coding for report metrics
+function getReportColor(health) {
+    if (health >= 85) return '#4CAF50';        // Excellent - Green
+    if (health >= 70) return '#2196F3';        // Good - Blue
+    if (health >= 55) return '#FF9800';        // Moderate - Orange  
+    if (health >= 40) return '#FFC107';        // Fair - Amber
+    return '#F44336';                          // Poor - Red
 }
 
-// Plot viewing functionality
-function viewPlot(plotNumber) {
-    console.log(`Opening Plot ${plotNumber} analysis...`);
+// Search functionality
+function searchLocation() {
+    const searchTerm = document.getElementById('locationSearch').value.trim();
     
-    const plotData = {
-        1: {
-            name: 'North Field Section',
-            crops: 'Wheat, Corn',
-            health: '94%',
-            issues: 'Minor irrigation needed'
-        },
-        2: {
-            name: 'South Field Section', 
-            crops: 'Soybeans, Barley',
-            health: '87%',
-            issues: 'Pest monitoring required'
-        }
-    };
-    
-    const plot = plotData[plotNumber];
-    if (plot) {
-        alert(`Plot ${plotNumber}: ${plot.name}\n\nCrops: ${plot.crops}\nHealth Status: ${plot.health}\nRecommendations: ${plot.issues}\n\nOpening detailed analysis...`);
-        
-        // Simulate plot opening animation
-        const plotContainer = event.currentTarget;
-        plotContainer.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            plotContainer.style.transform = 'scale(1)';
-        }, 200);
+    if (!searchTerm) {
+        showNotification('Please enter a location to search', 'error');
+        return;
     }
+    
+    const searchBtn = document.querySelector('.map-search-button');
+    const originalText = searchBtn.textContent;
+    searchBtn.textContent = 'Searching...';
+    searchBtn.disabled = true;
+    
+    // Geocoding with Nominatim API
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchTerm)}&limit=1`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const result = data[0];
+                const lat = parseFloat(result.lat);
+                const lng = parseFloat(result.lon);
+                
+                reportsMap.setView([lat, lng], 12);
+                
+                const searchMarker = L.marker([lat, lng]).addTo(reportsMap);
+                searchMarker.bindPopup(`
+                    <div style="text-align: center; min-width: 150px;">
+                        <strong>📍 Search Result</strong><br>
+                        <small>${result.display_name.substring(0, 60)}...</small>
+                    </div>
+                `).openPopup();
+                
+                setTimeout(() => {
+                    reportsMap.removeLayer(searchMarker);
+                }, 10000);
+                
+                showNotification('✅ Location found successfully!', 'success');
+            } else {
+                showNotification('Location not found. Please try a different search term.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+            showNotification('Search failed. Please check your connection.', 'error');
+        })
+        .finally(() => {
+            searchBtn.textContent = originalText;
+            searchBtn.disabled = false;
+        });
 }
 
-// Initialize dashboard when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('AgriSense Dashboard initialized');
+// Enhanced notification system
+function showNotification(message, type = 'info') {
+    const existingNotifications = document.querySelectorAll('.field-notification');
+    existingNotifications.forEach(notification => notification.remove());
     
-    // Add hover effects to metric cards
+    const notification = document.createElement('div');
+    notification.className = `field-notification ${type}`;
+    notification.textContent = message;
+    
+    const bgColor = type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#3B82F6';
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${bgColor};
+        color: #FFFFFF;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 350px;
+        word-wrap: break-word;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 300);
+    }, 4000);
+}
+
+// Add interactive effects
+function addInteractivity() {
+    // Metric cards hover effects
     const metricCards = document.querySelectorAll('.metric-card');
     metricCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px) scale(1.02)';
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px) scale(1.02)';
         });
         
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
         });
     });
-    
-    // Add click handlers for metric cards
-    metricCards.forEach((card, index) => {
-        card.addEventListener('click', function() {
-            const metricType = this.querySelector('.metric-label').textContent;
-            alert(`Viewing detailed ${metricType} analytics...\n\nThis will open comprehensive insights and historical data.`);
+
+    // Chart cards interactions
+    const chartCards = document.querySelectorAll('.chart-card');
+    chartCards.forEach(card => {
+        card.addEventListener('click', () => {
+            if (!card.classList.contains('map-container')) {
+                showNotification('📊 Advanced analytics feature coming soon!', 'info');
+            }
         });
     });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // ESC key to go back
+        if (e.key === 'Escape') {
+            window.location.href = '../Options/options.html';
+        }
+        
+        // U key for upload
+        if (e.key === 'u' || e.key === 'U') {
+            handleUpload();
+        }
+        
+        // R key for reports info
+        if (e.key === 'r' || e.key === 'R') {
+            showNotification('📊 Full report analysis active - showing comprehensive metrics', 'info');
+        }
+    });
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('📊 Full Reports Analytics loaded!');
     
-    // Simulate real-time data updates
-    startRealTimeUpdates();
+    setTimeout(() => {
+        if (document.getElementById('reportsMap')) {
+            initializeReportsMap();
+            console.log('✅ Reports Field Map initialized successfully!');
+        }
+    }, 500);
+    
+    // Add interactivity
+    addInteractivity();
+    
+    // Add enter key support for search
+    const searchInput = document.getElementById('locationSearch');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchLocation();
+            }
+        });
+    }
 });
 
-// Simulate real-time data updates
-function startRealTimeUpdates() {
-    setInterval(() => {
-        // Update temperature with small random variations
-        const tempElement = document.querySelector('.metric-card.moderate .metric-value');
-        if (tempElement && tempElement.textContent.includes('°C')) {
-            const currentTemp = parseInt(tempElement.textContent);
-            const newTemp = currentTemp + (Math.random() - 0.5) * 2;
-            tempElement.textContent = Math.round(newTemp) + '°C';
-        }
-        
-        // Occasionally update other metrics
-        if (Math.random() < 0.1) {
-            updateRandomMetric();
-        }
-    }, 30000); // Update every 30 seconds
-}
+// Error handling
+window.addEventListener('error', (event) => {
+    console.error('Reports page error:', event.error);
+    showNotification('An error occurred. Please try again.', 'error');
+});
 
-// Update a random metric
-function updateRandomMetric() {
-    const metrics = document.querySelectorAll('.metric-value');
-    const randomMetric = metrics[Math.floor(Math.random() * metrics.length)];
-    
-    if (randomMetric) {
-        randomMetric.style.animation = 'pulse 1s ease-in-out';
-        setTimeout(() => {
-            randomMetric.style.animation = '';
-        }, 1000);
-    }
-}
-
-// Export functions for external use
-window.AgriSense = {
-    generateFullReport,
-    handleUpload,
-    viewChart,
-    viewPlot
-};
+// Performance monitoring
+window.addEventListener('load', () => {
+    const loadTime = performance.now();
+    console.log(`📊 Full Reports analytics loaded in ${loadTime.toFixed(2)}ms`);
+});

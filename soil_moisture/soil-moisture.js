@@ -1,303 +1,247 @@
-/**
- * AgriSense AI - Soil Moisture Analytics
- * Real-time monitoring and analysis dashboard
- */
+let soilMoistureMap;
 
-// Mock data for soil moisture
-const MOISTURE_DATA = {
-    current: {
-        moisture: 42,
-        average24h: 38,
-        range: "32-45%",
-        status: "OPTIMAL"
-    },
+// Handle file upload
+function handleUpload() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.csv,.xlsx,.json';
+    fileInput.multiple = true;
     
-    recentReadings: [
-        { time: "14:30", moisture: 42, status: "Optimal" },
-        { time: "14:00", moisture: 39, status: "Good" },
-        { time: "13:30", moisture: 44, status: "Optimal" },
-        { time: "13:00", moisture: 38, status: "Good" },
-        { time: "12:30", moisture: 35, status: "Low" },
-        { time: "12:00", moisture: 33, status: "Low" },
-        { time: "11:30", moisture: 36, status: "Good" },
-        { time: "11:00", moisture: 40, status: "Optimal" }
-    ]
-};
-
-// Initialize dashboard
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('💧 Soil Moisture Analytics Dashboard loaded!');
-    initializeDashboard();
-});
-/**
- * AgriSense AI - Soil Temperature Analytics
- * Simple functionality matching Figma design
- */
-
-// ADD THIS NAVIGATION CODE AT THE BEGINNING
-// Navigation to landing page
-function navigateToLanding() {
-    // Add transition effect
-    document.body.style.transition = 'opacity 0.3s ease';
-    document.body.style.opacity = '0.8';
+    fileInput.onchange = function(event) {
+        const files = event.target.files;
+        if (files.length > 0) {
+            showNotification(`✅ Successfully uploaded ${files.length} file(s) for moisture analysis!`, 'success');
+        }
+    };
     
-    // Navigate after animation
-    setTimeout(() => {
-        window.location.href = '../Landing_Page/landing.html';
-    }, 300);
+    fileInput.click();
 }
 
-// Enhanced header interactions
-function initHeaderInteractions() {
-    const brandLink = document.querySelector('.brand-link');
-    const logo = document.querySelector('.logo');
+// Initialize map with search functionality
+function initializeSoilMoistureMap() {
+    const defaultLat = 28.6139;
+    const defaultLng = 77.2090;
     
-    if (brandLink) {
-        brandLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateToLanding();
-        });
-    }
+    soilMoistureMap = L.map('soilMoistureMap').setView([defaultLat, defaultLng], 10);
     
-    // Make logo also clickable
-    if (logo) {
-        logo.style.cursor = 'pointer';
-        logo.addEventListener('click', navigateToLanding);
-    }
-}
-
-// THEN UPDATE YOUR EXISTING DOMContentLoaded EVENT:
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🌡️ Soil Temperature Analytics loaded!');
-    initHeaderInteractions(); // ADD THIS LINE
-    addInteractivity(); // Your existing function
-});
-
-// Rest of your existing JavaScript code stays the same...
-
-function initializeDashboard() {
-    updateMetrics();
-    populateReadingsTable();
-    startRealTimeUpdates();
-    addInteractivity();
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(soilMoistureMap);
     
-    console.log('✅ Soil Moisture Dashboard initialized successfully');
-}
-
-// Update metric displays
-function updateMetrics() {
-    const currentMoisture = document.getElementById('current-moisture');
-    const avgMoisture = document.getElementById('avg-moisture');
-    const moistureRange = document.getElementById('moisture-range');
-    const moistureStatus = document.getElementById('moisture-status');
+    // Add soil moisture markers
+    const moistureMarkers = [
+        { lat: 28.6120, lng: 77.2070, moisture: 55, zone: 'A1', status: 'Moderate', condition: 'Requires monitoring' },
+        { lat: 28.6158, lng: 77.2110, moisture: 45, zone: 'A2', status: 'Low', condition: 'Irrigation needed' },
+        { lat: 28.6100, lng: 77.2050, moisture: 65, zone: 'B1', status: 'Good', condition: 'Optimal level' },
+        { lat: 28.6178, lng: 77.2130, moisture: 50, zone: 'B2', status: 'Moderate', condition: 'Monitor closely' }
+    ];
     
-    if (currentMoisture) currentMoisture.textContent = `${MOISTURE_DATA.current.moisture}%`;
-    if (avgMoisture) avgMoisture.textContent = `${MOISTURE_DATA.current.average24h}%`;
-    if (moistureRange) moistureRange.textContent = MOISTURE_DATA.current.range;
-    if (moistureStatus) moistureStatus.textContent = MOISTURE_DATA.current.status;
-    
-    // Add pulse animation to current reading
-    if (currentMoisture) {
-        currentMoisture.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            currentMoisture.style.animation = '';
-        }, 500);
-    }
-}
-
-// Populate readings table
-function populateReadingsTable() {
-    const tableBody = document.getElementById('readings-data');
-    if (!tableBody) return;
-    
-    tableBody.innerHTML = '';
-    
-    MOISTURE_DATA.recentReadings.forEach(reading => {
-        const row = document.createElement('div');
-        row.className = 'table-row';
+    moistureMarkers.forEach(marker => {
+        const color = getMoistureColor(marker.moisture);
         
-        let statusClass = 'status-optimal';
-        if (reading.status === 'Good') statusClass = 'status-good';
-        if (reading.status === 'Low') statusClass = 'status-warning';
-        
-        row.innerHTML = `
-            <span>${reading.time}</span>
-            <span>${reading.moisture}%</span>
-            <span class="${statusClass}">${reading.status}</span>
-        `;
-        
-        tableBody.appendChild(row);
+        L.circleMarker([marker.lat, marker.lng], {
+            radius: 8,
+            fillColor: color,
+            color: '#FFFFFF',
+            weight: 2,
+            fillOpacity: 0.9,
+            opacity: 1
+        })
+        .addTo(soilMoistureMap)
+        .bindPopup(`
+            <div style="text-align: center; min-width: 120px;">
+                <div style="font-weight: 700; margin-bottom: 4px;">Zone ${marker.zone}</div>
+                <div style="font-weight: 600; margin-bottom: 2px;">Moisture: ${marker.moisture}%</div>
+                <div style="font-size: 12px; color: #666; font-style: italic;">${marker.status}</div>
+                <div style="font-size: 11px; color: #2196F3; font-weight: 500; margin-top: 2px;">${marker.condition}</div>
+            </div>
+        `);
     });
 }
 
-// Generate moisture report
-function generateMoistureReport() {
-    showNotification('Generating soil moisture report...', 'info');
+// Color coding for moisture levels
+function getMoistureColor(moisture) {
+    if (moisture >= 80) return '#1976D2';        // Very High - Dark Blue
+    if (moisture >= 60) return '#2196F3';        // Good - Blue
+    if (moisture >= 40) return '#FFC107';        // Moderate - Amber  
+    if (moisture >= 20) return '#FF9800';        // Low - Orange
+    return '#F44336';                            // Very Low - Red
+}
+
+// Search functionality
+function searchLocation() {
+    const searchTerm = document.getElementById('locationSearch').value.trim();
     
-    setTimeout(() => {
-        const reportData = {
-            timestamp: new Date().toISOString(),
-            currentMoisture: MOISTURE_DATA.current.moisture,
-            average24h: MOISTURE_DATA.current.average24h,
-            status: MOISTURE_DATA.current.status,
-            recommendations: [
-                'Maintain current irrigation schedule',
-                'Monitor moisture levels during hot weather',
-                'Consider mulching to retain moisture'
-            ]
-        };
-        
-        console.log('Generated Moisture Report:', reportData);
-        showNotification('Soil moisture report generated successfully!', 'success');
-    }, 2000);
+    if (!searchTerm) {
+        showNotification('Please enter a location to search', 'error');
+        return;
+    }
+    
+    const searchBtn = document.querySelector('.map-search-button');
+    const originalText = searchBtn.textContent;
+    searchBtn.textContent = 'Searching...';
+    searchBtn.disabled = true;
+    
+    // Geocoding with Nominatim API
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchTerm)}&limit=1`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const result = data[0];
+                const lat = parseFloat(result.lat);
+                const lng = parseFloat(result.lon);
+                
+                soilMoistureMap.setView([lat, lng], 12);
+                
+                const searchMarker = L.marker([lat, lng]).addTo(soilMoistureMap);
+                searchMarker.bindPopup(`
+                    <div style="text-align: center; min-width: 150px;">
+                        <strong>📍 Search Result</strong><br>
+                        <small>${result.display_name.substring(0, 60)}...</small>
+                    </div>
+                `).openPopup();
+                
+                setTimeout(() => {
+                    soilMoistureMap.removeLayer(searchMarker);
+                }, 10000);
+                
+                showNotification('✅ Location found successfully!', 'success');
+            } else {
+                showNotification('Location not found. Please try a different search term.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+            showNotification('Search failed. Please check your connection.', 'error');
+        })
+        .finally(() => {
+            searchBtn.textContent = originalText;
+            searchBtn.disabled = false;
+        });
 }
 
-// Navigate back to options
-function navigateBack() {
-    showNotification('Returning to options...', 'info');
-    setTimeout(() => {
-        window.location.href = '../Options/options.html';
-    }, 500);
-}
-
-// View moisture chart
-function viewMoistureChart() {
-    showNotification('Opening detailed moisture chart...', 'info');
-    console.log('📊 Viewing moisture trends chart');
-}
-
-// Show notification
+// Enhanced notification system
 function showNotification(message, type = 'info') {
+    const existingNotifications = document.querySelectorAll('.field-notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
     const notification = document.createElement('div');
-    notification.innerHTML = `
-        <span>${message}</span>
-        <button onclick="this.parentElement.remove()" class="notification-close">&times;</button>
-    `;
+    notification.className = `field-notification ${type}`;
+    notification.textContent = message;
     
-    const colors = {
-        info: { bg: '#2196F3', color: '#FFFFFF' },
-        success: { bg: '#4CAF50', color: '#FFFFFF' },
-        error: { bg: '#F44336', color: '#FFFFFF' }
-    };
-    
-    const style = colors[type] || colors.info;
+    const bgColor = type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#3B82F6';
     
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
+        top: 100px;
         right: 20px;
-        background: ${style.bg};
-        color: ${style.color};
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-weight: 600;
+        background: ${bgColor};
+        color: #FFFFFF;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 500;
         font-size: 14px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        z-index: 1000;
-        animation: slideIn 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        max-width: 350px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 9999;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
     `;
-    
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.style.cssText = `
-        background: none;
-        border: none;
-        color: inherit;
-        font-size: 18px;
-        cursor: pointer;
-        padding: 0;
-        line-height: 1;
-    `;
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
-        if (notification.parentElement) {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 300);
     }, 4000);
 }
 
-// Start real-time updates
-function startRealTimeUpdates() {
-    setInterval(() => {
-        // Simulate small moisture fluctuations
-        const variation = (Math.random() - 0.5) * 3; // ±1.5% variation
-        const newMoisture = Math.max(0, Math.min(100, MOISTURE_DATA.current.moisture + variation));
-        
-        MOISTURE_DATA.current.moisture = Math.round(newMoisture);
-        updateMetrics();
-        
-    }, 20000); // Update every 20 seconds
-}
-
-// Add interactivity
+// Add interactive effects
 function addInteractivity() {
-    // Add hover effects to metric cards
+    // Metric cards hover effects
     const metricCards = document.querySelectorAll('.metric-card');
     metricCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px) scale(1.02)';
+            card.style.transform = 'translateY(-3px) scale(1.02)';
         });
         
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'translateY(0) scale(1)';
         });
     });
-    
-    // Add click events to chart containers
-    const chartContainer = document.querySelector('.chart-container');
-    if (chartContainer) {
-        chartContainer.addEventListener('click', viewMoistureChart);
-    }
+
+    // Chart cards interactions
+    const chartCards = document.querySelectorAll('.chart-card');
+    chartCards.forEach(card => {
+        card.addEventListener('click', () => {
+            if (!card.classList.contains('map-container')) {
+                showNotification('📊 Moisture analytics feature coming soon!', 'info');
+            }
+        });
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // ESC key to go back
+        if (e.key === 'Escape') {
+            window.location.href = '../Options/options.html';
+        }
+        
+        // U key for upload
+        if (e.key === 'u' || e.key === 'U') {
+            handleUpload();
+        }
+        
+        // M key for moisture info
+        if (e.key === 'm' || e.key === 'M') {
+            showNotification('🌊 Monitoring soil moisture for optimal irrigation...', 'info');
+        }
+    });
 }
 
-// Add animation styles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🌊 Soil Moisture Analytics loaded!');
     
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
-    }
+    setTimeout(() => {
+        if (document.getElementById('soilMoistureMap')) {
+            initializeSoilMoistureMap();
+            console.log('✅ Soil Moisture Map initialized successfully!');
+        }
+    }, 500);
     
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-    }
-`;
-document.head.appendChild(style);
-
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        navigateBack();
-    }
-    if (e.key === 'r' || e.key === 'R') {
-        generateMoistureReport();
+    // Add interactivity
+    addInteractivity();
+    
+    // Add enter key support for search
+    const searchInput = document.getElementById('locationSearch');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchLocation();
+            }
+        });
     }
 });
 
 // Error handling
 window.addEventListener('error', (event) => {
-    console.error('Soil Moisture Dashboard error:', event.error);
-    showNotification('An error occurred. Please refresh the page.', 'error');
+    console.error('Soil Moisture page error:', event.error);
+    showNotification('An error occurred. Please try again.', 'error');
 });
 
-// Export for global access
-window.SoilMoistureAnalytics = {
-    generateMoistureReport,
-    navigateBack,
-    viewMoistureChart,
-    showNotification
-};
-
-console.log('💧 Soil Moisture Analytics system ready!');
+// Performance monitoring
+window.addEventListener('load', () => {
+    const loadTime = performance.now();
+    console.log(`🌊 Soil Moisture analytics loaded in ${loadTime.toFixed(2)}ms`);
+});

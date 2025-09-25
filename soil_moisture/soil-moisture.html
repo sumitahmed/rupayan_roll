@@ -1,176 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soil Moisture Analytics - AgriSense AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <title>AgriSense AI - Soil Moisture Analytics</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="soil-moisture.css">
 </head>
-
 <body>
-    <div class="dashboard-container">
-        <!-- Header with Logo and User Avatar -->
-          <header class="header">
+    <!-- Header -->
+    <header class="header">
         <div class="logo-section">
             <img src="../shared/images/icons/logo (1).png" alt="AgriSense AI" class="logo">
-            <!-- REPLACE WITH THIS -->
-<a href="../Landing_Page/landing.html" class="brand-link">
-    <span class="brand">AgriSense AI</span>
-</a>
-
+            <a href="../Landing_Page/lnding.html" class="brand-link">
+                <span class="brand">AgriSense AI</span>
+            </a>
         </div>
-
+        
         <div class="user-section">
             <img src="../shared/images/avatars/avatar.png" alt="User Profile" class="avatar">
         </div>
     </header>
 
-
-        <!-- Navigation Semi-Circle - Top Right -->
-        <!-- <div class="nav-semicircle" onclick="navigateBack()">
-            <img src="../shared/images/icons/top_right_semicircle.jpeg" alt="Navigation Icon" class="nav-icon">
-            <div class="nav-text">SOIL<br>MOISTURE</div>
-
-        </div> -->
-
-
-        <!-- Main Title Section -->
-        <div class="main-title">
-            <h1 class="dashboard-title">Soil Moisture Analytics</h1>
-            <p class="dashboard-subtitle">Monitor soil moisture levels and optimize irrigation for healthy crop growth
-            </p>
-        </div>
-
-        <!-- Action Bar -->
-        <div class="action-bar">
-            <button class="action-btn primary" onclick="generateMoistureReport()">
-                Generate Moisture Report →
-            </button>
-        </div>
-
-        <!-- Metrics Row -->
-        <div class="metrics-row">
-            <div class="metric-card current">
-                <div class="metric-label">Current Moisture</div>
-                <div class="metric-value status-current" id="current-moisture">42%</div>
-            </div>
-            <div class="metric-card average">
-                <div class="metric-label">24h Average</div>
-                <div class="metric-value status-average" id="avg-moisture">38%</div>
-            </div>
-            <div class="metric-card range">
-                <div class="metric-label">Today's Range</div>
-                <div class="metric-value status-range" id="moisture-range">32-45%</div>
-            </div>
-            <div class="metric-card status">
-                <div class="metric-label">Moisture Status</div>
-                <div class="metric-value status-optimal" id="moisture-status">OPTIMAL</div>
-            </div>
-        </div>
-
-        <!-- Analytics Row -->
-        <div class="analytics-row">
-            <div class="chart-container" onclick="viewMoistureChart()">
-                <h3 class="chart-title">24-Hour Moisture Trends</h3>
-                <div class="chart-placeholder">
-                    <img src="../shared/images/backgrounds/bg-soil.png" alt="Moisture Trend Chart"
-                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
-                </div>
-            </div>
-            <div class="data-container">
-                <h3 class="data-title">Recent Readings</h3>
-                <div class="readings-table">
-                    <div class="table-header">
-                        <span>Time</span>
-                        <span>Moisture</span>
-                        <span>Status</span>
-                    </div>
-                    <div class="table-body" id="readings-data">
-                        <div class="table-row">
-                            <span>14:30</span>
-                            <span>42%</span>
-                            <span class="status-optimal">Optimal</span>
-                        </div>
-                        <div class="table-row">
-                            <span>14:00</span>
-                            <span>39%</span>
-                            <span class="status-good">Good</span>
-                        </div>
-                        <div class="table-row">
-                            <span>13:30</span>
-                            <span>44%</span>
-                            <span class="status-optimal">Optimal</span>
-                        </div>
-                        <div class="table-row">
-                            <span>13:00</span>
-                            <span>38%</span>
-                            <span class="status-good">Good</span>
-                        </div>
-                        <div class="table-row">
-                            <span>12:30</span>
-                            <span>35%</span>
-                            <span class="status-warning">Low</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Insights Row -->
-        <div class="insights-row">
-            <div class="insights-container">
-                <h3 class="insights-title">AI Insights</h3>
-                <div class="insights-content">
-                    <div class="insight-item">
-                        <span class="insight-icon">💧</span>
-                        <div class="insight-text">
-                            <h4>Irrigation Recommendation</h4>
-                            <p>Optimal moisture levels maintained. Next watering in 18 hours.</p>
-                        </div>
-                    </div>
-                    <div class="insight-item">
-                        <span class="insight-icon">📈</span>
-                        <div class="insight-text">
-                            <h4>Weekly Trend</h4>
-                            <p>Moisture consistency improved by 15% compared to last week.</p>
-                        </div>
-                    </div>
-                    <div class="insight-item">
-                        <span class="insight-icon">🌱</span>
-                        <div class="insight-text">
-                            <h4>Growth Impact</h4>
-                            <p>Current levels are perfect for root development stage.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="alerts-container">
-                <h3 class="alerts-title">System Alerts</h3>
-                <div class="alerts-content">
-                    <div class="alert-item success">
-                        <span class="alert-dot"></span>
-                        <span class="alert-text">All moisture sensors operational</span>
-                    </div>
-                    <div class="alert-item info">
-                        <span class="alert-dot"></span>
-                        <span class="alert-text">Data sync completed successfully</span>
-                    </div>
-                    <div class="alert-item warning">
-                        <span class="alert-dot"></span>
-                        <span class="alert-text">Minor fluctuation detected at sensor 3</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Back Navigation -->
-        <a href="../Options/options.html" class="back-link">← Back to Options</a>
+    <!-- Main Title -->
+    <div class="main-title">
+        <h1>Analytics Dashboard</h1>
+        <p>Monitor your farm's performance with real time data and insights</p>
     </div>
 
+    <!-- Soil Moisture Badge
+    <div class="moisture-badge">
+        <div class="badge-content">
+            <span class="badge-text">SOIL MOISTURE</span>
+        </div>
+    </div> -->
+
+    <!-- Upload Files Button -->
+    <div class="upload-container">
+        <button class="upload-btn" onclick="handleUpload()">🗂️ Upload Files</button>
+    </div>
+
+    <!-- Metrics Cards - EXACT MATCH TO YOUR IMAGE -->
+    <div class="metrics-container">
+        <div class="metric-card soil-moisture-blue">
+            <div class="metric-title">Soil Moisture</div>
+            <div class="metric-value moderate">Moderate</div>
+        </div>
+
+        <div class="metric-card mean-white">
+            <div class="metric-title">Mean</div>
+            <div class="metric-value">0.753</div>
+        </div>
+
+        <div class="metric-card std-white">
+            <div class="metric-title">Standard Deviation</div>
+            <div class="metric-value">0.173</div>
+        </div>
+
+        <div class="metric-card recommendation-blue">
+            <div class="metric-title">Recommendation</div>
+            <div class="metric-subtitle">Moderate condition requires monitoring</div>
+        </div>
+    </div>
+
+    <!-- Charts Section - MAP WITH SEARCH BAR -->
+    <div class="charts-container">
+        <!-- Zone Distribution Map with Search Bar -->
+        <div class="chart-card map-container">
+            <div class="map-header">
+                <div class="chart-title">Zone Distribution</div>
+                <div class="map-search-bar">
+                    <input type="text" id="locationSearch" placeholder="Search location..." class="map-search-input">
+                    <button onclick="searchLocation()" class="map-search-button">Search</button>
+                </div>
+            </div>
+            <div id="soilMoistureMap" class="field-map"></div>
+        </div>
+
+        <!-- Heat Map - UNCHANGED -->
+        <div class="chart-card">
+            <div class="chart-title">Heat Map</div>
+            <div class="chart-content">
+                <img src="../shared/images/charts/heat-map.png" alt="Heat Map Chart">
+            </div>
+        </div>
+    </div>
+
+    <!-- Plots Section - BOTH UNCHANGED -->
+    <div class="plots-container">
+        <div class="plot-card">
+            <div class="plot-title">Plot 1</div>
+            <div class="plot-content">
+                <img src="../shared/images/plots/plot-1.png" alt="Plot 1 Analysis">
+            </div>
+        </div>
+
+        <div class="plot-card">
+            <div class="plot-title">Plot 2</div>
+            <div class="plot-content">
+                <img src="../shared/images/plots/plot-2.png" alt="Plot 2 Analysis">
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Link -->
+    <a href="../Options/options.html" class="back-link">← Back to Dashboard</a>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- JavaScript -->
     <script src="soil-moisture.js"></script>
 </body>
-
 </html>
